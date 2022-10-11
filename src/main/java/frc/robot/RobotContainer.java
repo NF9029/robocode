@@ -4,13 +4,19 @@
 
 package frc.robot;
 
+<<<<<<< HEAD
 import edu.wpi.first.wpilibj.Timer;
+=======
+import edu.wpi.first.math.filter.SlewRateLimiter;
+>>>>>>> 182d0b8eb38bf18cc780d58275646459bc5b69c0
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.TankDrive;
-import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj2.command.Command;
+//import frc.robot.commands.Auto;
+import frc.robot.commands.Drive;
+import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.ShooterHorizontal;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -19,10 +25,26 @@ import edu.wpi.first.wpilibj2.command.Command;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final DriveTrain driveTrain = new DriveTrain();
+  private static int portR = 0, portS = 1;
 
-  private final TankDrive m_autoCommand = new TankDrive(driveTrain);
+  // Joysticks
+  public final XboxController m_robotController = new XboxController(portR);
+  public final Joystick m_shooterController = new Joystick(portS);
+
+  // Slew rate limiters to make joystick inputs more gentle; 1/3 sec from 0 to 1.
+  private final SlewRateLimiter m_speedLimiter = new SlewRateLimiter(3);
+  private final SlewRateLimiter m_rotLimiter = new SlewRateLimiter(3);
+
+  // Subsystems
+  private final DriveTrain m_driveTrain = new DriveTrain();
+  private final ShooterHorizontal m_shooterRotation = new ShooterHorizontal();
+  
+  // Drivetrain Commands
+  private final Drive drive = new Drive(m_driveTrain);
+
+  // Shooter Commands
+
+  // Intake Commands
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -37,14 +59,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    // I put variables for port numbers because i dont know the ports right now these will change.
-    int portR = 0, portS = 1;
-    XboxController robotController = new XboxController(portR);
-    Joystick shooterController = new Joystick(portS);
-
-    // Because i don't want to see vscode show me any problem.
-    robotController.getPort();
-    shooterController.getPort();
+    // m_robotController Buttons: A -> 1, B -> 2, X -> 3, Y -> 4
   }
 
   /**
@@ -54,7 +69,26 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An TankDrive will run in autonomous
-    return m_autoCommand;
+    return null;
+  }
+
+  public void drive() {
+    // Get the x speed. We are inverting this because Xbox controllers return
+    // negative values when we push forward.
+    final var xSpeed = -m_speedLimiter.calculate(m_robotController.getLeftY()) * DriveTrain.kMaxSpeed;
+
+    // Get the rate of angular rotation. We are inverting this because we want a
+    // positive value when we pull to the left (remember, CCW is positive in
+    // mathematics). Xbox controllers return positive values when you pull to
+    // the right by default.
+    final var rot = -m_rotLimiter.calculate(m_robotController.getRightX()) * DriveTrain.kMaxAngularSpeed;
+
+    m_driveTrain.drive(xSpeed, rot);
+  }
+
+  // TEST MODE
+  public void initTest() {
+    m_shooterRotation.initTest();
   }
 
   public void testSensors() {
@@ -68,5 +102,9 @@ public class RobotContainer {
     // driveTrain.m_mpu6050.printTemperature();
 
     driveTrain.m_mpu6050.printAngles();
+
+  public void testEncoder() {
+    m_shooterRotation.printEncoderData();
   }
+  
 }

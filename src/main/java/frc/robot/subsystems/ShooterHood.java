@@ -7,4 +7,5 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  */
 public class ShooterHood extends SubsystemBase {
     public ShooterHood() {}
+    public void configure() {}
 }

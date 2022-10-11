@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 /**
  * I actually might not need this there is a tankDrive command under DifferentialDrive.
  */
-public class TankDrive extends CommandBase {
+public class Drive extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final DriveTrain driveTrain;
 
@@ -19,7 +19,7 @@ public class TankDrive extends CommandBase {
    *
    * @param drivetrain The drivetrain used by this command.
    */
-  public TankDrive(DriveTrain drivetrain) {
+  public Drive(DriveTrain drivetrain) {
     driveTrain = drivetrain;
     // Use addRequirements() here to declare drivetrain dependencies.
     addRequirements(driveTrain);
@@ -27,7 +27,9 @@ public class TankDrive extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
