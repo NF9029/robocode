@@ -31,8 +31,8 @@ public class DriveTrain extends SubsystemBase {
   private final DifferentialDrive mDrive;
 
   // No idea what our encoders are
-  private final Encoder leftEncoder = new Encoder(0, 0); 
-  private final Encoder rightEncoder = new Encoder(0, 0); 
+  private final Encoder leftEncoder = new Encoder(0, 1); 
+  private final Encoder rightEncoder = new Encoder(2, 3); 
   
   private final DifferentialDriveKinematics m_kinematics =
   new DifferentialDriveKinematics(kTrackWidth);
@@ -53,11 +53,13 @@ public class DriveTrain extends SubsystemBase {
 
     rightMotors.setInverted(true);
     
+    leftEncoder.setDistancePerPulse(360./400.);
+    rightEncoder.setDistancePerPulse(360./400.);
+
     leftEncoder.reset();
     rightEncoder.reset();
 
     mDrive.isAlive();
-    
   }
   /**
   * Sets the desired wheel speeds.
@@ -88,5 +90,9 @@ public class DriveTrain extends SubsystemBase {
   @Override
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
+  }
+
+  public void printEncoderData() {
+    System.out.println(leftEncoder.getDistance());
   }
 }

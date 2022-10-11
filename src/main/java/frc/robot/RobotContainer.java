@@ -55,4 +55,8 @@ public class RobotContainer {
     // An TankDrive will run in autonomous
     return m_autoCommand;
   }
+
+  public void testEncoder() {
+    driveTrain.printEncoderData();
+  }
 }
