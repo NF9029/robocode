@@ -4,11 +4,8 @@
 
 package frc.robot;
 
-<<<<<<< HEAD
 import edu.wpi.first.wpilibj.Timer;
-=======
 import edu.wpi.first.math.filter.SlewRateLimiter;
->>>>>>> 182d0b8eb38bf18cc780d58275646459bc5b69c0
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -101,7 +98,8 @@ public class RobotContainer {
     // driveTrain.m_mpu6050.printAccData();
     // driveTrain.m_mpu6050.printTemperature();
 
-    driveTrain.m_mpu6050.printAngles();
+    m_driveTrain.m_mpu6050.printAngles();
+  }
 
   public void testEncoder() {
     m_shooterRotation.printEncoderData();

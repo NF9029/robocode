@@ -3,11 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems;
-import frc.robot.lib.mpu6050.MPUData;
 import frc.robot.lib.mpu6050.MPU6050;
-
-//import java.nio.ByteBuffer;
-//import java.nio.ByteOrder;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 

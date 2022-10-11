@@ -2,11 +2,9 @@ package frc.robot.lib.mpu6050;
 
 import frc.robot.lib.mpu6050.MPUData;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.I2C;
 import java.nio.ByteBuffer;
-
-import edu.wpi.first.wpilibj.interfaces.Gyro;
-import edu.wpi.first.util.sendable.Sendable;
 
 import java.lang.Math;
 
@@ -42,9 +40,9 @@ public class MPU6050 {
     double ay = ard_map(data.m_accY, 265, 402, -90, 90);
     double az = ard_map(data.m_accZ, 265, 402, -90, 90);
 
-    ax = Math.toDegrees(Math.atan2(-ay, -az) + Math.PI);
-    ay = Math.toDegrees(Math.atan2(-ax, -az) + Math.PI);
-    az = Math.toDegrees(Math.atan2(-ay, -ax) + Math.PI);
+    ax = Math.atan2(-ay, -az) + Math.PI;
+    ay = Math.atan2(-ax, -az) + Math.PI;
+    az = Math.atan2(-ay, -ax) + Math.PI;
   
     return new double[] { ax, ay, az };
   }
@@ -54,7 +52,7 @@ public class MPU6050 {
     double ay = ard_map(data.m_accY, 265, 402, -90, 90);
     double az = ard_map(data.m_accZ, 265, 402, -90, 90);
 
-    return Math.toDegrees(Math.atan2(-ay, -az) + Math.PI);
+    return Math.atan2(-ay, -az) + Math.PI;
   }
 
   public double getAngleY() {
@@ -62,7 +60,7 @@ public class MPU6050 {
     double ax = ard_map(data.m_accX, 265, 402, -90, 90);
     double az = ard_map(data.m_accZ, 265, 402, -90, 90);
 
-    return Math.toDegrees(Math.atan2(-ax, -az) + Math.PI);
+    return Math.atan2(-ax, -az) + Math.PI;
   }
 
   public double getAngleZ() {
@@ -70,15 +68,39 @@ public class MPU6050 {
     double ax = ard_map(data.m_accX, 265, 402, -90, 90);
     double ay = ard_map(data.m_accY, 265, 402, -90, 90);
 
-    return Math.toDegrees(Math.atan2(-ay, -ax) + Math.PI);
+    return Math.atan2(-ay, -ax) + Math.PI;
+  }
+
+  public Rotation2d getRotationX() {
+    MPUData data = getMPUData();
+    double ay = ard_map(data.m_accY, 265, 402, -90, 90);
+    double az = ard_map(data.m_accZ, 265, 402, -90, 90);
+
+    return new Rotation2d(Math.atan2(-ay, -az) + Math.PI);
+  }
+
+  public Rotation2d getRotationY() {
+    MPUData data = getMPUData();
+    double ax = ard_map(data.m_accX, 265, 402, -90, 90);
+    double az = ard_map(data.m_accZ, 265, 402, -90, 90);
+
+    return new Rotation2d(Math.atan2(-ax, -az) + Math.PI);
+  }
+
+  public Rotation2d getRotationZ() {
+    MPUData data = getMPUData();
+    double ax = ard_map(data.m_accX, 265, 402, -90, 90);
+    double ay = ard_map(data.m_accY, 265, 402, -90, 90);
+
+    return new Rotation2d(Math.atan2(-ay, -ax) + Math.PI);
   }
 
   public void printAngles() {
-    System.out.print(getAngleX());
+    System.out.print(Math.toDegrees(getAngleX()));
     System.out.print(", \t");
-    System.out.print(getAngleY());
+    System.out.print(Math.toDegrees(getAngleY()));
     System.out.print(", \t");
-    System.out.print(getAngleX());
+    System.out.print(Math.toDegrees(getAngleX()));
     System.out.println();
   }
 
