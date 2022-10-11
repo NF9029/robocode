@@ -12,4 +12,7 @@ public class Collector extends SubsystemBase {
         // just because i didnt want to see '1 problem in this file'
         collectorController.notify();
     }
+
+    public void configure() {}
+
 }
