@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -56,7 +57,16 @@ public class RobotContainer {
     return m_autoCommand;
   }
 
-  public void testEncoder() {
-    driveTrain.printEncoderData();
+  public void testSensors() {
+    // System.out.print("Encoder data: ");
+    // driveTrain.printEncoderData();
+
+    System.out.print("MPU6050 data: ");
+    // driveTrain.m_mpu6050.printAllData();
+    // driveTrain.m_mpu6050.printGyroData();
+    // driveTrain.m_mpu6050.printAccData();
+    // driveTrain.m_mpu6050.printTemperature();
+
+    driveTrain.m_mpu6050.printAngles();
   }
 }

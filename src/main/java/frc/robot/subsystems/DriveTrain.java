@@ -3,6 +3,8 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems;
+import frc.robot.lib.mpu6050.MPUData;
+import frc.robot.lib.mpu6050.MPU6050;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
@@ -14,6 +16,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 //import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+
 
 public class DriveTrain extends SubsystemBase {
   /* Differential drive */
@@ -34,9 +37,11 @@ public class DriveTrain extends SubsystemBase {
   private final Encoder leftEncoder = new Encoder(0, 1); 
   private final Encoder rightEncoder = new Encoder(2, 3); 
   
-  private final DifferentialDriveKinematics m_kinematics =
-  new DifferentialDriveKinematics(kTrackWidth);
-  
+  private final DifferentialDriveKinematics m_kinematics = new DifferentialDriveKinematics(kTrackWidth);
+
+  // Gyro 
+  public MPU6050 m_mpu6050 = new MPU6050((byte) 0x68);
+
   /**
   * Constructs an object.
   * Resets encoders, inverts a side of motor controllers, etc.
