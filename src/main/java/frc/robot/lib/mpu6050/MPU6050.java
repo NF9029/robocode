@@ -1,6 +1,6 @@
 package frc.robot.lib.mpu6050;
 
-import frc.robot.lib.mpu6050.MPUData;
+//import frc.robot.lib.mpu6050.MPUData;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.I2C;
@@ -8,7 +8,9 @@ import java.nio.ByteBuffer;
 
 import java.lang.Math;
 
-
+/**
+ * Class to use MPU6050 to get rotation and angle.
+ */
 public class MPU6050 {
   private ByteBuffer m_readBuffer = ByteBuffer.allocate(14);
   private byte m_I2CAddress;
@@ -25,6 +27,9 @@ public class MPU6050 {
     m_i2c.write(0x6B, 0);
   }
 
+  /**
+   * @return The address of the device in byte for I2C
+   */
   public byte getI2CAddress() {
     return m_I2CAddress;
   }
@@ -70,7 +75,10 @@ public class MPU6050 {
 
     return Math.atan2(-ay, -ax) + Math.PI;
   }
-
+  
+  /**
+   * Get rotation from MPU6050's X axis as wpilib's Rotation2d
+   */
   public Rotation2d getRotationX() {
     MPUData data = getMPUData();
     double ay = ard_map(data.m_accY, 265, 402, -90, 90);
@@ -79,6 +87,9 @@ public class MPU6050 {
     return new Rotation2d(Math.atan2(-ay, -az) + Math.PI);
   }
 
+  /**
+   * Get rotation from MPU6050's Y axis as wpilib's Rotation2d
+   */
   public Rotation2d getRotationY() {
     MPUData data = getMPUData();
     double ax = ard_map(data.m_accX, 265, 402, -90, 90);
@@ -87,6 +98,9 @@ public class MPU6050 {
     return new Rotation2d(Math.atan2(-ax, -az) + Math.PI);
   }
 
+  /**
+   * Get rotation from MPU6050's Z axis as wpilib's Rotation2d
+   */
   public Rotation2d getRotationZ() {
     MPUData data = getMPUData();
     double ax = ard_map(data.m_accX, 265, 402, -90, 90);
@@ -141,6 +155,10 @@ public class MPU6050 {
     System.out.println(data.getTemperature());
   }
 
+  /**
+   * Prints all data from MPU6050 as a gyroscope.
+   * Used for debug.
+   */
   public void printGyroData() {
     MPUData data = getMPUData();
     System.out.print("Gyro X: ");

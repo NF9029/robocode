@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 //import frc.robot.commands.Auto;
 import frc.robot.commands.Drive;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.ShooterHood;
 import frc.robot.subsystems.ShooterHorizontal;
 
 /**
@@ -35,6 +36,7 @@ public class RobotContainer {
   // Subsystems
   private final DriveTrain m_driveTrain = new DriveTrain();
   private final ShooterHorizontal m_shooterRotation = new ShooterHorizontal();
+  private final ShooterHood m_hood = new ShooterHood();
   
   // Drivetrain Commands
   private final Drive drive = new Drive(m_driveTrain);
@@ -85,7 +87,7 @@ public class RobotContainer {
 
   // TEST MODE
   public void initTest() {
-    m_shooterRotation.initTest();
+    m_hood.initTest();
   }
 
   public void testSensors() {
@@ -102,7 +104,7 @@ public class RobotContainer {
   }
 
   public void testEncoder() {
-    m_shooterRotation.printEncoderData();
+    m_hood.printEncoderData();
   }
   
 }

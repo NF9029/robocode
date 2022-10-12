@@ -146,6 +146,8 @@ public class DriveTrain extends SubsystemBase {
   /** Updates the field-relative position. */
   public void updateOdometry() {
     m_odometry.update(
-    m_gyro.getRotation2d(), m_leftEncoder.getDistance(), m_rightEncoder.getDistance());
+    m_mpu6050.getRotationX(), // rotation in Rotation2d from custom lib. may use Y or Z accordingly
+    m_leftEncoder.getDistance(), 
+    m_rightEncoder.getDistance());
   }
 }
