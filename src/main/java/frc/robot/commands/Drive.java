@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  */
 public class Drive extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final DriveTrain driveTrain;
+  private final DriveTrain m_driveTrain;
 
   /**
    * Drives the robot
@@ -20,9 +20,9 @@ public class Drive extends CommandBase {
    * @param drivetrain The drivetrain used by this command.
    */
   public Drive(DriveTrain drivetrain) {
-    driveTrain = drivetrain;
+    m_driveTrain = drivetrain;
     // Use addRequirements() here to declare drivetrain dependencies.
-    addRequirements(driveTrain);
+    addRequirements(m_driveTrain);
   }
 
   // Called when the command is initially scheduled.

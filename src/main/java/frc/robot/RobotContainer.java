@@ -23,11 +23,11 @@ import frc.robot.subsystems.ShooterHorizontal;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  private static int portR = 0, portS = 1;
+  private static int m_portR = 0, m_portS = 1;
 
   // Joysticks
-  public final XboxController m_robotController = new XboxController(portR);
-  public final Joystick m_shooterController = new Joystick(portS);
+  public final XboxController m_robotController = new XboxController(m_portR);
+  public final Joystick m_shooterController = new Joystick(m_portS);
 
   // Slew rate limiters to make joystick inputs more gentle; 1/3 sec from 0 to 1.
   private final SlewRateLimiter m_speedLimiter = new SlewRateLimiter(3);
