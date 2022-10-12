@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.motorcontrol.Talon;
 
 
 
@@ -39,11 +40,11 @@ public class DriveTrain extends SubsystemBase {
   private final WPI_VictorSPX m_leftMaster = new WPI_VictorSPX(1);
   private final WPI_VictorSPX m_leftFollower = new WPI_VictorSPX(2);
   
-  private final WPI_VictorSPX m_rightMotors = new WPI_VictorSPX(3);
+  private final Talon m_rightMotors = new Talon(6);
   
   private final MotorControllerGroup m_leftMotors;
   
-  private final DifferentialDrive m_drive;
+  //private final DifferentialDrive m_drive;
   
   private final PIDController m_leftPIDController = new PIDController(1, 0, 0);
   private final PIDController m_rightPIDController = new PIDController(1, 0, 0);
@@ -74,7 +75,7 @@ public class DriveTrain extends SubsystemBase {
     
     m_leftMotors = new MotorControllerGroup(m_leftMaster, m_leftFollower);
     
-    m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
+    //m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
     
     m_rightMotors.setInverted(true);
     

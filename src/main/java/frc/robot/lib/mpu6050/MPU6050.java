@@ -39,13 +39,6 @@ public class MPU6050 {
     return new MPUData(m_readBuffer);
   }
 
-  public double testGyro() {
-    MPUData data = getMPUData();
-    angle_pitch += data.m_gyroX * 0.0000611;
-    angle_row += data.m_gyroY * 0.0000611;
-    angle_pitch += data.m_gyroX * 0.0000611;
-  }
-
   public double[] getAllAngles() {
     MPUData data = getMPUData();
     double ax = ard_map(data.m_accX, 265, 402, -90, 90);
