@@ -14,15 +14,15 @@ public class MPU6050 {
   private byte m_I2CAddress;
   private I2C m_i2c;
 
-  private double ard_map(long x, long in_min, long in_max, long out_min, long out_max) {
-    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-  }
-
   // 0x68
   public MPU6050(byte I2CAddress) {
     m_I2CAddress = I2CAddress;
     m_i2c = new I2C(I2C.Port.kMXP, m_I2CAddress);
     m_i2c.write(0x6B, 0);
+  }
+
+  private double ard_map(long x, long in_min, long in_max, long out_min, long out_max) {
+    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
   }
 
   public byte getI2CAddress() {
@@ -32,6 +32,13 @@ public class MPU6050 {
   public MPUData getMPUData() {
     m_i2c.read(0x3B, 14, m_readBuffer);
     return new MPUData(m_readBuffer);
+  }
+
+  public double testGyro() {
+    MPUData data = getMPUData();
+    angle_pitch += data.m_gyroX * 0.0000611;
+    angle_row += data.m_gyroY * 0.0000611;
+    angle_pitch += data.m_gyroX * 0.0000611;
   }
 
   public double[] getAllAngles() {
