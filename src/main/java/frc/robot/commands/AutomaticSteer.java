@@ -16,6 +16,14 @@ public class AutomaticSteer extends CommandBase {
 
     }
 
+    public boolean get() {
+        if (m_controller.getZ() < 0.1 && m_controller.getZ() > -0.1) {
+            return false;
+        }
+        System.out.println("Automatic steering off");
+        return true;
+    }
+
     @Override
     public void initialize() {}
 
@@ -27,9 +35,9 @@ public class AutomaticSteer extends CommandBase {
     @Override 
     public boolean isFinished() {
         if (m_controller.getZ() < 0.1 && m_controller.getZ() > -0.1) {
-            System.out.println("Automatic steering off");
-            return true;
+            return false;
         }
-        return false;
+        System.out.println("Automatic steering off");
+        return true;
     }
 }

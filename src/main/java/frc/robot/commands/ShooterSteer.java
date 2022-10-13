@@ -22,11 +22,13 @@ public class ShooterSteer extends CommandBase {
 
     @Override
     public void initialize() {
+        /*
         if (m_controller.getZ() > 0.1 && m_controller.getZ() < -0.1) {
             return;
         }
         System.out.println("Manual steering off");
         end(true);
+        */
     }
 
     @Override
@@ -35,5 +37,14 @@ public class ShooterSteer extends CommandBase {
         final var speed = m_filter.calculate(m_controller.getZ()) * MAX_SPEED;
 
         m_subsystem.steer(speed);
+    }
+    
+    @Override
+    public boolean isFinished() {
+        if (-0.1 < m_controller.getZ() && m_controller.getZ() < 0.1) {
+            return true;
+        }
+        System.out.println("Manual steering off");
+        return false;
     }
 }

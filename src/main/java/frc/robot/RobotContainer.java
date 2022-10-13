@@ -4,12 +4,14 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Timer;
+import static frc.robot.Constants.HorizontalConstants.DISTANCE_TO_TARGET;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandGroupBase;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AutomaticSteer;
 //import edu.wpi.first.wpilibj2.command.Subsystem;
 //import frc.robot.commands.Auto;
@@ -18,8 +20,6 @@ import frc.robot.commands.ShooterSteer;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ShooterHood;
 import frc.robot.subsystems.ShooterHorizontal;
-
-import static frc.robot.Constants.HorizontalConstants.DISTANCE_TO_TARGET;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -54,6 +54,17 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     m_driveTrain.setDefaultCommand(m_driveCommand);
+    m_shooterRotation.setDefaultCommand(m_autoSteer);
+  }
+  public class ShooterHorizontalTrigger extends Trigger {
+    @Override
+    public boolean get() {
+      if (-0.1 < m_shooterController.getZ() && m_shooterController.getZ() < 0.1) {
+        return false;
+      }
+      System.out.println("Automatic steering off");
+      return true;
+    }
   }
 
   /**
@@ -64,6 +75,9 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     // m_robotController Buttons: A -> 1, B -> 2, X -> 3, Y -> 4
+    // Eğer Joystick z ekseninde biraz döndürülürse otomatik modu kapatıp döndürmeye başla
+    ShooterHorizontalTrigger m_steerTrigger = new ShooterHorizontalTrigger();
+    m_steerTrigger.toggleWhenActive(m_steer);
   }
 
   /**
@@ -77,8 +91,8 @@ public class RobotContainer {
   }
 
   public void ScheduleTeleop() {
-      CommandGroupBase.parallel(m_driveTrain.getDefaultCommand(), CommandGroupBase.sequence(m_autoSteer, m_steer)).schedule();
-      
+      // CommandGroupBase.parallel(m_driveTrain.getDefaultCommand(), CommandGroupBase.sequence(m_autoSteer, m_steer)).schedule();
+
   }
 
   // TEST MODE
