@@ -10,6 +10,11 @@ import java.lang.Math;
  * Class to use MPU6050 to get rotation and angle.
  */
 public class MPU6050 {
+  private ByteBuffer m_readBuffer = ByteBuffer.allocate(14);
+  private MPUData m_configured_state = new MPUData();
+  private byte m_I2CAddress;
+  private I2C m_i2c;
+
   private static class MPUData {
     public short m_accX, m_accY, m_accZ, m_gyroX, m_gyroY, m_gyroZ;
     private short m_temperature;
@@ -50,11 +55,6 @@ public class MPU6050 {
       return m_temperature/340. + 36.53;
     }
   }
-
-  private ByteBuffer m_readBuffer = ByteBuffer.allocate(14);
-  private MPUData m_configured_state = new MPUData();
-  private byte m_I2CAddress;
-  private I2C m_i2c;
 
   // 0x68
   public MPU6050(byte I2CAddress) {
