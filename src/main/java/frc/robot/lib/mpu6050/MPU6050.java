@@ -42,6 +42,8 @@ public class MPU6050 {
     m_i2c.write(0x6B, 0);
   }
 
+  public void reset() {}
+
   private double ard_map(long x, long in_min, long in_max, long out_min, long out_max) {
     return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
   }

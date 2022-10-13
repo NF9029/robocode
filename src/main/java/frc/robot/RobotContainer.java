@@ -5,17 +5,21 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.CommandGroupBase;
+import frc.robot.commands.AutomaticSteer;
+//import edu.wpi.first.wpilibj2.command.Subsystem;
 //import frc.robot.commands.Auto;
 import frc.robot.commands.Drive;
+import frc.robot.commands.ShooterSteer;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ShooterHood;
 import frc.robot.subsystems.ShooterHorizontal;
+
+import static frc.robot.Constants.HorizontalConstants.DISTANCE_TO_TARGET;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -38,8 +42,10 @@ public class RobotContainer {
   
   // Drivetrain Commands
   private final Drive m_driveCommand = new Drive(m_driveTrain, m_robotController);
-
+  
   // Shooter Commands
+  private final ShooterSteer m_steer = new ShooterSteer(m_shooterRotation, m_shooterController);
+  private final AutomaticSteer m_autoSteer = new AutomaticSteer(m_shooterRotation, m_shooterController, DISTANCE_TO_TARGET);
 
   // Intake Commands
 
@@ -71,7 +77,8 @@ public class RobotContainer {
   }
 
   public void ScheduleTeleop() {
-    m_driveTrain.getDefaultCommand().schedule();
+      CommandGroupBase.parallel(m_driveTrain.getDefaultCommand(), CommandGroupBase.sequence(m_autoSteer, m_steer)).schedule();
+      
   }
 
   // TEST MODE

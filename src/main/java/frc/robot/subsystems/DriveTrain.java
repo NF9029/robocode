@@ -3,46 +3,42 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems;
+
 import frc.robot.lib.mpu6050.MPU6050;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import static frc.robot.Constants.DriveTrainConstants.*;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
-//import edu.wpi.first.wpilibj.ADXL345_I2C.AllAxes;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Encoder;
-//import edu.wpi.first.wpilibj.I2C;
-//import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.motorcontrol.Talon;
+//import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+//import edu.wpi.first.wpilibj.motorcontrol.Talon;
+//import edu.wpi.first.wpilibj.ADXL345_I2C.AllAxes;
+//import edu.wpi.first.wpilibj.I2C;
+
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 
 
 public class DriveTrain extends SubsystemBase {
-  /* Differential drive */
-  public static final double kMaxSpeed = 3.0; // meters per second
-  public static final double kMaxAngularSpeed = Math.PI * 2; // rotation
-
-
-  private static final double kTrackWidth = 0.605; // meters
-  private static final double kWheelRadius = 0.1526; // meters
-  
-  private static final int kEncoderResolution = 4096;
-  //private static final byte kAddress = 0x68;
   //private static final byte kRegisterAddress = 0x3B;
   //private static final double kGsPerLSB = 0.00390625;
   
-  private final WPI_VictorSPX m_leftMaster = new WPI_VictorSPX(1);
-  private final WPI_VictorSPX m_leftFollower = new WPI_VictorSPX(2);
+  private final WPI_VictorSPX m_leftMaster = new WPI_VictorSPX(MOTOR_PORT1);
+  private final WPI_VictorSPX m_leftFollower = new WPI_VictorSPX(MOTOR_PORT2);
   
-  private final Talon m_rightMotors = new Talon(6);
+  private final WPI_VictorSPX m_rightMaster = new WPI_VictorSPX(MOTOR_PORT3);
+  private final WPI_VictorSPX m_rightFollower = new WPI_VictorSPX(MOTOR_PORT4);
   
   private final MotorControllerGroup m_leftMotors;
+  private final MotorControllerGroup m_rightMotors;
   
   //private final DifferentialDrive m_drive;
   
@@ -55,14 +51,14 @@ public class DriveTrain extends SubsystemBase {
   private final DifferentialDriveOdometry m_odometry;
   
   // No idea what our encoders are
-  private final Encoder m_leftEncoder = new Encoder(0, 1); 
-  private final Encoder m_rightEncoder = new Encoder(2, 3); 
+  private final Encoder m_leftEncoder = new Encoder(LEFT_ENCODER_PORT_A, LEFT_ENCODER_PORT_B); 
+  private final Encoder m_rightEncoder = new Encoder(RIGHT_ENCODER_PORT_A, RIGHT_ENCODER_PORT_B); 
   
   private final DifferentialDriveKinematics m_kinematics = 
-  new DifferentialDriveKinematics(kTrackWidth);
+  new DifferentialDriveKinematics(TRACK_WIDTH);
 
   // Gyro 
-  public MPU6050 m_mpu6050 = new MPU6050((byte) 0x68);
+  public MPU6050 m_mpu6050 = new MPU6050(I2C_ADDRESS);
 
   /**
   * Constructs an object.
@@ -74,13 +70,15 @@ public class DriveTrain extends SubsystemBase {
     m_leftFollower.follow(m_leftMaster);
     
     m_leftMotors = new MotorControllerGroup(m_leftMaster, m_leftFollower);
+    m_rightMotors = new MotorControllerGroup(m_rightMaster, m_rightFollower);
+
     
     //m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
     
     m_rightMotors.setInverted(true);
     
-    m_leftEncoder.setDistancePerPulse(2 * Math.PI * kWheelRadius / kEncoderResolution);
-    m_rightEncoder.setDistancePerPulse(2 * Math.PI * kWheelRadius / kEncoderResolution);
+    m_leftEncoder.setDistancePerPulse(DISTANCE_PER_PULSE);
+    m_rightEncoder.setDistancePerPulse(DISTANCE_PER_PULSE);
     
     m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
   }

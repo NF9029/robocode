@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import static frc.robot.Constants.HoodConstants.*;
+
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -9,11 +11,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  * Did this because i want to see if i can move the shooter horizontally and vertically at the same time.
  */
 public class ShooterHood extends SubsystemBase {
-    private TalonSRX m_controller = new TalonSRX(0);
-    private final Encoder m_encoder = new Encoder(4, 5); 
+    private WPI_VictorSPX m_motorController = new WPI_VictorSPX(MOTOR_PORT);
+    private final Encoder m_encoder = new Encoder(ENCODER_PORT_A, ENCODER_PORT_B); 
 
     public ShooterHood() {
-        m_encoder.setDistancePerPulse(360./400.);
+        m_encoder.setDistancePerPulse(DISTANCE_PER_PULSE);
     }
 
     public void initTest() {
