@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 //import frc.robot.commands.Auto;
 import frc.robot.commands.Drive;
 import frc.robot.subsystems.DriveTrain;
@@ -29,9 +30,6 @@ public class RobotContainer {
   public final XboxController m_robotController = new XboxController(m_portR);
   public final Joystick m_shooterController = new Joystick(m_portS);
 
-  // Slew rate limiters to make joystick inputs more gentle; 1/3 sec from 0 to 1.
-  private final SlewRateLimiter m_speedLimiter = new SlewRateLimiter(3);
-  private final SlewRateLimiter m_rotLimiter = new SlewRateLimiter(3);
 
   // Subsystems
   private final DriveTrain m_driveTrain = new DriveTrain();
@@ -39,7 +37,7 @@ public class RobotContainer {
   private final ShooterHood m_hood = new ShooterHood();
   
   // Drivetrain Commands
-  private final Drive drive = new Drive(m_driveTrain);
+  private final Drive m_driveCommand = new Drive(m_driveTrain, m_robotController);
 
   // Shooter Commands
 
@@ -49,6 +47,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+    m_driveTrain.setDefaultCommand(m_driveCommand);
   }
 
   /**
@@ -71,18 +70,8 @@ public class RobotContainer {
     return null;
   }
 
-  public void drive() {
-    // Get the x speed. We are inverting this because Xbox controllers return
-    // negative values when we push forward.
-    final var xSpeed = -m_speedLimiter.calculate(m_robotController.getLeftY()) * DriveTrain.kMaxSpeed;
-
-    // Get the rate of angular rotation. We are inverting this because we want a
-    // positive value when we pull to the left (remember, CCW is positive in
-    // mathematics). Xbox controllers return positive values when you pull to
-    // the right by default.
-    final var rot = -m_rotLimiter.calculate(m_robotController.getRightX()) * DriveTrain.kMaxAngularSpeed;
-
-    m_driveTrain.drive(xSpeed, rot);
+  public void ScheduleTeleop() {
+    m_driveTrain.getDefaultCommand().schedule();
   }
 
   // TEST MODE

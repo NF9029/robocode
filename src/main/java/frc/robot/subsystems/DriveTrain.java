@@ -16,7 +16,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Encoder;
 //import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+//import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.motorcontrol.Talon;
@@ -82,9 +82,6 @@ public class DriveTrain extends SubsystemBase {
     m_leftEncoder.setDistancePerPulse(2 * Math.PI * kWheelRadius / kEncoderResolution);
     m_rightEncoder.setDistancePerPulse(2 * Math.PI * kWheelRadius / kEncoderResolution);
     
-    m_leftEncoder.reset();
-    m_rightEncoder.reset();
-    
     m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
   }
   /**
@@ -126,6 +123,15 @@ public class DriveTrain extends SubsystemBase {
 
   // configure defaults
   public void configure() {}
+
+  /**
+   * Reset's the encoders on the drive train.
+   * Called from drive command.
+   */
+  public void resetEncoders() {
+    m_leftEncoder.reset();
+    m_rightEncoder.reset();
+  }
   
   public void printEncoderData() {
     System.out.println(m_leftEncoder.getDistance());
