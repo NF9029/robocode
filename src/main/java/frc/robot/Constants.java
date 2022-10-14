@@ -5,6 +5,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PneumaticsControlModule;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -88,6 +90,12 @@ public final class Constants {
 
     public static final class CollectorConstants {
         public static final int MOTOR_PORT = 5;
+
+        public static final PneumaticsModuleType P_MODULE_TYPE = PneumaticsModuleType.CTREPCM;
+        public static final int PORT_1 = 0;
+        public static final int PORT_2 = 1;
+        public static final int PORT_3 = 2;
+        public static final int PORT_4 = 3;
 
     }
 

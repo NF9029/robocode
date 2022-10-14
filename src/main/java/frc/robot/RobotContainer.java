@@ -15,11 +15,18 @@ import edu.wpi.first.wpilibj2.command.CommandGroupBase;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AutomaticSteer;
+import frc.robot.commands.CloseHatch;
 //import edu.wpi.first.wpilibj2.command.Subsystem;
 //import frc.robot.commands.Auto;
 import frc.robot.commands.Drive;
+import frc.robot.commands.Intake;
+import frc.robot.commands.Lift;
+import frc.robot.commands.OpenHatch;
 import frc.robot.commands.ShooterSteer;
+import frc.robot.subsystems.Collector;
+import frc.robot.subsystems.CollectorHatch;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.ShooterHood;
 import frc.robot.subsystems.ShooterHorizontal;
 
@@ -35,14 +42,19 @@ public class RobotContainer {
   public final Joystick m_shooterController = new Joystick(SHOOTER_CONTROLLER_PORT);
 
   // Button
-  //public final JoystickButton m_manualSteerButton = new JoystickButton(m_shooterController, 3);
-
+  //public final JoystickButton m_1 = new JoystickButton(m_shooterController, 1);
+  public final JoystickButton m_openHatchButton = new JoystickButton(m_robotController, 4);
+  public final JoystickButton m_closeHatchButton = new JoystickButton(m_robotController, 1);
 
   // Subsystems
   private final DriveTrain m_driveTrain = new DriveTrain();
   private final ShooterHorizontal m_shooterRotation = new ShooterHorizontal();
-  private boolean m_shooterLastAuto = false;
   private final ShooterHood m_hood = new ShooterHood();
+  private final CollectorHatch m_hatch = new CollectorHatch();
+  private final Shooter m_shooter = new Shooter();
+  private final BallLifter m_lifter = new BallLifter();
+  private final Collector m_collector = new Collector();
+
   
   // Drivetrain Commands
   private final Drive m_driveCommand = new Drive(m_driveTrain, m_robotController);
@@ -51,7 +63,13 @@ public class RobotContainer {
   private final ShooterSteer m_manualSteer = new ShooterSteer(m_shooterRotation, m_shooterController);
   private final AutomaticSteer m_autoSteer = new AutomaticSteer(m_shooterRotation, m_shooterController, DISTANCE_TO_TARGET);
 
+  private final Lift m_liftBall = new Lift();
+
   // Intake Commands
+  private final OpenHatch m_openHatch = new OpenHatch(m_hatch);
+  private final CloseHatch m_closeHatch = new CloseHatch(m_hatch);
+  private final Intake m_intake = new Intake();
+  
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -68,6 +86,8 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     // m_robotController Buttons: A -> 1, B -> 2, X -> 3, Y -> 4
+    m_openHatchButton.debounce(0.05).whenActive(m_openHatch);
+    m_closeHatchButton.debounce(0.05).whenActive(m_closeHatch);
   }
 
   /**
@@ -81,11 +101,12 @@ public class RobotContainer {
   }
 
   public void ScheduleTeleop() {
-      CommandGroupBase.parallel(m_driveTrain.getDefaultCommand()).schedule();
+      m_driveTrain.getDefaultCommand().schedule();
+      getShooterSteerCommand().schedule();
   }
   
   public boolean isManual() {
-    if (-0.1 < m_shooterController.getZ() && m_shooterController.getZ() < 0.1) {
+    if (-0.40 < m_shooterController.getZ() && m_shooterController.getZ() < 0.40) {
       return false;
     }
     return true;
@@ -95,20 +116,19 @@ public class RobotContainer {
     if (isManual()) {
       // en son otomatik çalıştırılmışsa ve 
       // otomatik bitmemişse bitmesine izin ver
-      if (m_shooterLastAuto && !m_autoSteer.isFinished()) {
-        m_shooterLastAuto = true;
-        return m_autoSteer;
-      }
+      //if (m_shooterLastAuto && !m_autoSteer.isFinished()) {
+      //  m_shooterLastAuto = true;
+      //  return m_autoSteer;
+      //}
       // otomatik modu işini bitirmişse manuele al
-      m_shooterLastAuto = false;
+      //m_shooterLastAuto = false;
       return m_manualSteer;
     } 
-    m_shooterLastAuto = true;
+    //m_shooterLastAuto = true;
     return m_autoSteer;
   }
 
   public void ScheduleTeleopPeriodic() {
-    getShooterSteerCommand().schedule();
   }
   
   // TEST MODE

@@ -21,6 +21,10 @@ public class ShooterHood extends SubsystemBase {
     public void initTest() {
         m_encoder.reset();
     }
+
+    public void setSpeed() {
+        
+    }
     
     public void configure() {}
 
