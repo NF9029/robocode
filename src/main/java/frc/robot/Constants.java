@@ -42,6 +42,7 @@ public final class Constants {
         public static final double DISTANCE_PER_PULSE = 2 * Math.PI * WHEEL_RADIUS / ENCODER_RESOLUTION;
 
 
+        // For MPU6050
         public static final byte I2C_ADDRESS = 0x68;
 
         //reversed?
@@ -76,6 +77,7 @@ public final class Constants {
     public static final class HorizontalConstants {
         public static final int MOTOR_PORT = 2;
         public static final int DIGITAL_PORT = 6;
+        // For MPU6050
         public static final byte I2C_ADDRESS = 0x69;
 
         public static final double FILTER = 0.5;
