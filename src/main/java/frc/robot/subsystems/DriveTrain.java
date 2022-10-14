@@ -47,7 +47,7 @@ public class DriveTrain extends SubsystemBase {
   
   private final SimpleMotorFeedforward m_feedforward = new SimpleMotorFeedforward(1, 3);
   
-  private final AnalogGyro m_gyro = new AnalogGyro(0);
+  //private final AnalogGyro m_gyro = new AnalogGyro(0);
   private final DifferentialDriveOdometry m_odometry;
   
   // No idea what our encoders are
@@ -65,7 +65,7 @@ public class DriveTrain extends SubsystemBase {
   * Resets encoders, inverts a side of motor controllers, etc.
   */
   public DriveTrain() {
-    m_gyro.reset();
+    m_mpu6050.reset();
     // All of this is gonna have to be edited but, at least some structure?
     m_leftFollower.follow(m_leftMaster);
     
@@ -80,7 +80,7 @@ public class DriveTrain extends SubsystemBase {
     m_leftEncoder.setDistancePerPulse(DISTANCE_PER_PULSE);
     m_rightEncoder.setDistancePerPulse(DISTANCE_PER_PULSE);
     
-    m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
+    m_odometry = new DifferentialDriveOdometry(m_mpu6050.getRotationX());
   }
   /**
   * Sets the desired wheel speeds.
