@@ -42,6 +42,7 @@ public class RobotContainer {
   // Subsystems
   private final DriveTrain m_driveTrain = new DriveTrain();
   private final ShooterHorizontal m_shooterRotation = new ShooterHorizontal();
+  private boolean m_shooterLastAuto = false;
   private final ShooterHood m_hood = new ShooterHood();
   
   // Drivetrain Commands
@@ -58,18 +59,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     m_driveTrain.setDefaultCommand(m_driveCommand);
-    //m_shooterRotation.setDefaultCommand(m_autoSteer);
   }
-  //public class ShooterHorizontalTrigger extends Trigger {
-  //  @Override
-  //  public boolean get() {
-  //    if (-0.1 < m_shooterController.getZ() && m_shooterController.getZ() < 0.1) {
-  //      return false;
-  //    }
-  //    System.out.println("Automatic steering off");
-  //    return true;
-  //  }
-  //}
 
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
@@ -79,9 +69,6 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     // m_robotController Buttons: A -> 1, B -> 2, X -> 3, Y -> 4
-    // Eğer Joystick z ekseninde biraz döndürülürse otomatik modu kapatıp döndürmeye başla
-    //ShooterHorizontalTrigger m_steerTrigger = new ShooterHorizontalTrigger();
-    m_manualSteerButton.whenHeld(m_manualSteer).whenReleased(m_autoSteer);
   }
 
   /**
@@ -98,14 +85,32 @@ public class RobotContainer {
       CommandGroupBase.parallel(m_driveTrain.getDefaultCommand()).schedule();
   }
   
-  // public boolean isManual() {
-  //   if (-0.1 < m_shooterController.getZ() && m_shooterController.getZ() < 0.1) {
-  //     return false;
-  //   }
-  //   return true;
-  // }
-  // 
-  public void ScheduleTeleopPeriodic() {}
+  public boolean isManual() {
+    if (-0.1 < m_shooterController.getZ() && m_shooterController.getZ() < 0.1) {
+      return false;
+    }
+    return true;
+  }
+  
+  public Command getShooterSteerCommand() {
+    if (isManual()) {
+      // en son otomatik çalıştırılmışsa ve 
+      // otomatik bitmemişse bitmesine izin ver
+      if (m_shooterLastAuto && !m_autoSteer.isFinished()) {
+        m_shooterLastAuto = true;
+        return m_autoSteer;
+      }
+      // otomatik modu işini bitirmişse manuele al
+      m_shooterLastAuto = false;
+      return m_manualSteer;
+    } 
+    m_shooterLastAuto = true;
+    return m_autoSteer;
+  }
+
+  public void ScheduleTeleopPeriodic() {
+    getShooterSteerCommand().schedule();
+  }
   
   // TEST MODE
   public void initTest() {
