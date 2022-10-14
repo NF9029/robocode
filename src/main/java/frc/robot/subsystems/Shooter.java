@@ -16,5 +16,10 @@ public class Shooter extends SubsystemBase {
     public void shoot() {
         m_motorController.set(MOTOR_SPEED);
     }
+
+    public void stop() {
+        m_motorController.set(0);
+    }
+    
     public void configure() {}
 }

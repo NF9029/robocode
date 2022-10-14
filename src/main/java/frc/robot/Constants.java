@@ -38,7 +38,7 @@ public final class Constants {
         public static final int RIGHT_ENCODER_PORT_A = 2;
         public static final int RIGHT_ENCODER_PORT_B = 3;
 
-        public static final int ENCODER_RESOLUTION = 4096;
+        public static final double ENCODER_RESOLUTION = 400; // 1X
         public static final double DISTANCE_PER_PULSE = 2 * Math.PI * WHEEL_RADIUS / ENCODER_RESOLUTION;
 
 
@@ -67,7 +67,7 @@ public final class Constants {
         public static final int ENCODER_PORT_B = 5;
 
         // encoder constants
-        public static final int ENCODER_RESOLUTION = 4096;
+        public static final double ENCODER_RESOLUTION = 400; // 1X
         public static final double DISTANCE_PER_PULSE = 360./400.;
 
 

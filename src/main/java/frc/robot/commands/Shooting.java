@@ -1,6 +1,6 @@
 package frc.robot.commands;
 
-import static frc.robot.Constants.ShooterConstants.*;
+//import static frc.robot.Constants.ShooterConstants.*;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;

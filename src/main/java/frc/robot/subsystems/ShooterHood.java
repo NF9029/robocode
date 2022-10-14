@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  */
 public class ShooterHood extends SubsystemBase {
     private WPI_VictorSPX m_motorController = new WPI_VictorSPX(MOTOR_PORT);
-    private final Encoder m_encoder = new Encoder(ENCODER_PORT_A, ENCODER_PORT_B); 
+    private final Encoder m_encoder = new Encoder(ENCODER_PORT_A, ENCODER_PORT_B, false, Encoder.EncodingType.k1X); 
 
     public ShooterHood() {
         m_encoder.setDistancePerPulse(DISTANCE_PER_PULSE);
