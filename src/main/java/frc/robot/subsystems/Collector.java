@@ -1,16 +1,17 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.motorcontrol.MotorController;
-import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import static frc.robot.Constants.CollectorConstants.*;
+
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 
 public class Collector extends SubsystemBase {
-    private final MotorController m_collectorController = new Spark(0);
+    private final WPI_VictorSPX m_motorController = new WPI_VictorSPX(MOTOR_PORT);
 
     public Collector() {
-        // just because i didnt want to see '1 problem in this file'
-        m_collectorController.notify();
+
     }
 
     public void configure() {}

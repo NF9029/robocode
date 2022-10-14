@@ -15,6 +15,10 @@ import edu.wpi.first.wpilibj.Joystick;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+    public static final int ROBOT_CONTROLLER_PORT = 0;
+    public static final int SHOOTER_CONTROLLER_PORT = 1;
+
     public static final class DriveTrainConstants {
         //Matematics (what?)
         public static final double MAX_SPEED = 3.0;
@@ -81,11 +85,12 @@ public final class Constants {
     }
 
     public static final class CollectorConstants {
+        public static final int MOTOR_PORT = 5;
 
     }
 
     public static final class BallLifter {
-
+        public static final int MOTOR_PORT = 6;
     }
 
     public boolean isManual(Joystick controller) {

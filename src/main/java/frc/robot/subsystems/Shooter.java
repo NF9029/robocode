@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Shooter extends SubsystemBase {
+    // JOYSTICK BUTTON 1
     private final Talon m_motorController = new Talon(MOTOR_PORT); 
 
     public Shooter() {

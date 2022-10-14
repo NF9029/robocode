@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import static frc.robot.Constants.*;
 import static frc.robot.Constants.HorizontalConstants.DISTANCE_TO_TARGET;
 
 import edu.wpi.first.wpilibj.GenericHID;
@@ -29,14 +30,12 @@ import frc.robot.subsystems.ShooterHorizontal;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  private static int m_portR = 0, m_portS = 1;
-
   // Joysticks
-  public final XboxController m_robotController = new XboxController(m_portR);
-  public final Joystick m_shooterController = new Joystick(m_portS);
+  public final XboxController m_robotController = new XboxController(ROBOT_CONTROLLER_PORT);
+  public final Joystick m_shooterController = new Joystick(SHOOTER_CONTROLLER_PORT);
 
   // Button
-  public final JoystickButton m_manualSteerButton = new JoystickButton(m_shooterController, 3);
+  //public final JoystickButton m_manualSteerButton = new JoystickButton(m_shooterController, 3);
 
 
   // Subsystems
