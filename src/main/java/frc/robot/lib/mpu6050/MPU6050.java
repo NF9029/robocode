@@ -11,12 +11,23 @@ import java.lang.Math;
  */
 public class MPU6050 {
   private ByteBuffer m_readBuffer = ByteBuffer.allocate(14);
+  private MPUData m_configured_state = new MPUData();
   private byte m_I2CAddress;
   private I2C m_i2c;
 
   private static class MPUData {
     public short m_accX, m_accY, m_accZ, m_gyroX, m_gyroY, m_gyroZ;
     private short m_temperature;
+
+    public MPUData() {
+      m_accX = 0;
+      m_accY = 0;
+      m_accZ = 0;
+      m_temperature = 0;
+      m_gyroX = 0;
+      m_gyroY = 0;
+      m_gyroZ = 0;
+    }
 
     public MPUData(ByteBuffer MPUReading) {
       m_accX = MPUReading.getShort(0);
@@ -28,11 +39,21 @@ public class MPU6050 {
       m_gyroZ = MPUReading.getShort(12);
     }
 
+    public void subtract(MPUData other) {
+      m_accX -= other.m_accX;
+      m_accY -= other.m_accY;
+      m_accZ -= other.m_accZ;
+      // temprature için offset yok
+      // m_temperature -= other.m_temperature;
+      m_gyroX -= other.m_gyroX;
+      m_gyroY -= other.m_gyroY;
+      m_gyroZ -= other.m_gyroZ;
+    }
+
     public double getTemperature() {
       // Sıcaklığı hesaplamak için biraz işlem
       return m_temperature/340. + 36.53;
     }
-
   }
 
   // 0x68
@@ -42,7 +63,9 @@ public class MPU6050 {
     m_i2c.write(0x6B, 0);
   }
 
-  public void reset() {}
+  public void reset() {
+    m_configured_state = getMPUData();
+  }
 
   private double ard_map(long x, long in_min, long in_max, long out_min, long out_max) {
     return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
@@ -57,7 +80,9 @@ public class MPU6050 {
 
   private MPUData getMPUData() {
     m_i2c.read(0x3B, 14, m_readBuffer);
-    return new MPUData(m_readBuffer);
+    MPUData read_data = new MPUData(m_readBuffer);
+    read_data.subtract(m_configured_state);
+    return read_data;
   }
 
   public double[] getAllAngles() {
