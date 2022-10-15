@@ -51,8 +51,8 @@ public class DriveTrain extends SubsystemBase {
   private final DifferentialDriveOdometry m_odometry;
   
   // Encoders
-  private final Encoder m_leftEncoder = new Encoder(LEFT_ENCODER_PORT_A, LEFT_ENCODER_PORT_B, LEFT_ENCODER_REVERSED, Encoder.EncodingType.k1X); 
-  private final Encoder m_rightEncoder = new Encoder(RIGHT_ENCODER_PORT_A, RIGHT_ENCODER_PORT_B, RIGHT_ENCODER_REVERSED, Encoder.EncodingType.k1X); 
+  private final Encoder m_leftEncoder = new Encoder(LEFT_ENCODER_PORT_A, LEFT_ENCODER_PORT_B, LEFT_ENCODER_REVERSED, Encoder.EncodingType.k4X); 
+  private final Encoder m_rightEncoder = new Encoder(RIGHT_ENCODER_PORT_A, RIGHT_ENCODER_PORT_B, RIGHT_ENCODER_REVERSED, Encoder.EncodingType.k4X); 
   
   private final DifferentialDriveKinematics m_kinematics = 
   new DifferentialDriveKinematics(TRACK_WIDTH);
@@ -132,7 +132,10 @@ public class DriveTrain extends SubsystemBase {
   }
   
   public void printEncoderData() {
-    System.out.println(m_leftEncoder.getDistance());
+    System.out.println("rate: " + m_leftEncoder.getRate() + 
+    ", Distance: " + m_leftEncoder.getDistance() + 
+    ", DPP: " + m_leftEncoder.getDistancePerPulse() + 
+    ", Direction: " + m_leftEncoder.getDirection());
   }
 /* 
   public void printAxes() {

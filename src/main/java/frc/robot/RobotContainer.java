@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandGroupBase;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AutomaticSteer;
 import frc.robot.commands.CloseHatch;
@@ -145,19 +146,23 @@ public class RobotContainer {
   // TEST MODE
   public void initTest() {
     m_hood.initTest();
+
+    m_driveTrain.resetEncoders();
   }
 
   public void testSensors() {
-    // System.out.print("Encoder data: ");
-    // driveTrain.printEncoderData();
+    System.out.print("Encoder data: ");
+    m_driveTrain.printEncoderData();
+    new WaitCommand(2);
 
-    System.out.print("MPU6050 data: ");
+
+    // System.out.print("MPU6050 data: ");
     // driveTrain.m_mpu6050.printAllData();
     // driveTrain.m_mpu6050.printGyroData();
     // driveTrain.m_mpu6050.printAccData();
     // driveTrain.m_mpu6050.printTemperature();
 
-    m_driveTrain.m_mpu6050.printAngles();
+    // m_driveTrain.m_mpu6050.printAngles();
   }
 
   public double getBaseGyroData() {
