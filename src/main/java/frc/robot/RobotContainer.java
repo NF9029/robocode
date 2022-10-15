@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.CommandGroupBase;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.AutomaticSteer;
+import frc.robot.commands.HorizontalAutoSteer;
 import frc.robot.commands.CloseHatch;
 //import edu.wpi.first.wpilibj2.command.Subsystem;
 //import frc.robot.commands.Auto;
@@ -24,7 +24,7 @@ import frc.robot.commands.Drive;
 import frc.robot.commands.Intake;
 import frc.robot.commands.Lift;
 import frc.robot.commands.OpenHatch;
-import frc.robot.commands.ShooterSteer;
+import frc.robot.commands.HorizontalManualSteer;
 import frc.robot.commands.Shooting;
 import frc.robot.subsystems.BallLifter;
 import frc.robot.subsystems.Collector;
@@ -68,8 +68,8 @@ public class RobotContainer {
   private final Drive m_driveCommand = new Drive(m_driveTrain, m_robotController);
   
   // Shooter Commands
-  private final ShooterSteer m_manualSteer = new ShooterSteer(m_shooterRotation, m_shooterController);
-  private final AutomaticSteer m_autoSteer = new AutomaticSteer(m_shooterRotation, m_shooterController, DISTANCE_TO_TARGET);
+  private final HorizontalManualSteer m_manualSteer = new HorizontalManualSteer(m_shooterRotation, m_shooterController);
+  private final HorizontalAutoSteer m_autoSteer = new HorizontalAutoSteer(m_shooterRotation, m_shooterController, DISTANCE_TO_TARGET);
 
   private final Shooting m_shoot = new Shooting(m_shooter);
 
