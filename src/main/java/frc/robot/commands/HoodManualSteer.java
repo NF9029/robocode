@@ -1,29 +1,33 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Encoder;
+import static frc.robot.Constants.HoodConstants.*;
+
+import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterHood;
 
 public class HoodManualSteer extends CommandBase {
-    ShooterHood m_hood;
-    public HoodManualSteer(ShooterHood hood) {
-        m_hood = hood;
+    private final ShooterHood m_subsystem;
+    private final Joystick m_controller;
 
-        addRequirements(hood);
+    private final SlewRateLimiter m_filter = new SlewRateLimiter(FILTER);
+
+    public HoodManualSteer(ShooterHood subsystem, Joystick controller) {
+        m_subsystem = subsystem;
+        m_controller = controller;
+
+        addRequirements(m_subsystem);
     }
 
     @Override
     public void execute() {
-
-    }
-
-    @Override
-    public void end(boolean interrupted) {
-
+        final var speed = m_filter.calculate(m_controller.getZ()) * MAX_SPEED;
+        m_subsystem.manualSteer(speed);
     }
 
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
 }

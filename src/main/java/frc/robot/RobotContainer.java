@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj2.command.CommandGroupBase;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.HorizontalAutoSteer;
 import frc.robot.commands.CloseHatch;
 //import edu.wpi.first.wpilibj2.command.Subsystem;
 //import frc.robot.commands.Auto;
@@ -25,6 +24,9 @@ import frc.robot.commands.Intake;
 import frc.robot.commands.Lift;
 import frc.robot.commands.OpenHatch;
 import frc.robot.commands.HorizontalManualSteer;
+import frc.robot.commands.HorizontalAutoSteer;
+import frc.robot.commands.HoodManualSteer;
+import frc.robot.commands.HoodAutoSteer;
 import frc.robot.commands.Shooting;
 import frc.robot.subsystems.BallLifter;
 import frc.robot.subsystems.Collector;
@@ -68,8 +70,11 @@ public class RobotContainer {
   private final Drive m_driveCommand = new Drive(m_driveTrain, m_robotController);
   
   // Shooter Commands
-  private final HorizontalManualSteer m_manualSteer = new HorizontalManualSteer(m_shooterRotation, m_shooterController);
-  private final HorizontalAutoSteer m_autoSteer = new HorizontalAutoSteer(m_shooterRotation, m_shooterController, DISTANCE_TO_TARGET);
+  private final HorizontalManualSteer m_horizontalManualSteer = new HorizontalManualSteer(m_shooterRotation, m_shooterController);
+  private final HorizontalAutoSteer m_horizontalAutoSteer = new HorizontalAutoSteer(m_shooterRotation);
+
+  private final HoodManualSteer m_hoodManualSteer = new HoodManualSteer(m_hood, m_shooterController);
+  private final HoodAutoSteer m_hoodAutoSteer = new HoodAutoSteer(m_hood);
 
   private final Shooting m_shoot = new Shooting(m_shooter);
 
@@ -118,18 +123,30 @@ public class RobotContainer {
 
   public void ScheduleTeleop() {
       m_driveTrain.getDefaultCommand().schedule();
-      getShooterSteerCommand().schedule();
+      getHorizontalSteerCommand().schedule();
+      getHoodSteerCommand().schedule();
   }
   
-  public boolean isManual() {
+  public boolean isHorizontalManual() {
     if (-0.40 < m_shooterController.getZ() && m_shooterController.getZ() < 0.40) {
       return false;
     }
     return true;
   }
+
+  public boolean isHoodManual() {
+    return true;
+  }
   
-  public Command getShooterSteerCommand() {
-    if (isManual()) {
+  public Command getHoodSteerCommand() {
+    if (isHoodManual()) {
+      return m_horizontalManualSteer;
+    } 
+    return m_horizontalAutoSteer;
+  }
+
+  public Command getHorizontalSteerCommand() {
+    if (isHorizontalManual()) {
       // en son otomatik çalıştırılmışsa ve 
       // otomatik bitmemişse bitmesine izin ver
       //if (m_shooterLastAuto && !m_autoSteer.isFinished()) {
@@ -138,10 +155,10 @@ public class RobotContainer {
       //}
       // otomatik modu işini bitirmişse manuele al
       //m_shooterLastAuto = false;
-      return m_manualSteer;
+      return m_horizontalManualSteer;
     } 
     //m_shooterLastAuto = true;
-    return m_autoSteer;
+    return m_horizontalAutoSteer;
   }
 
   public void ScheduleTeleopPeriodic() {

@@ -72,7 +72,8 @@ public final class Constants {
         public static final double ENCODER_RESOLUTION = 400; // 1X
         public static final double DISTANCE_PER_PULSE = 360./400.;
 
-        public static final double SPEED = 0.3;
+        public static final double MAX_SPEED = 0.1;
+        public static final double FILTER = 0.5;
 
         public static final double MAX_ANGLE = 30;
         public static final double MAX_ANGLE_TOLERANCE = 5;

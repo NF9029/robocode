@@ -15,7 +15,6 @@ public class ShooterHorizontal extends SubsystemBase {
     private final DigitalInput m_switch = new DigitalInput(DIGITAL_PORT);
     private int m_pendingReturn = 0;
 
-    // CHANGE
     private final MPU6050 m_mpu6050 = new MPU6050(I2C_ADDRESS);
 
     public ShooterHorizontal() {
@@ -25,7 +24,8 @@ public class ShooterHorizontal extends SubsystemBase {
 
     public void manualSteer(double speed) {
         // saçmalık
-        m_motorController.set(speed);
+        // m_motorController.set(speed);
+        setSpeed(speed);
     }
 
     // Default olarak 0 derece
