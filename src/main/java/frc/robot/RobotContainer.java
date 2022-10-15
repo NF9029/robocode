@@ -4,7 +4,8 @@
 
 package frc.robot;
 
-import static frc.robot.Constants.*;
+import static frc.robot.Constants.ROBOT_CONTROLLER_PORT;
+import static frc.robot.Constants.SHOOTER_CONTROLLER_PORT;
 import static frc.robot.Constants.HorizontalConstants.DISTANCE_TO_TARGET;
 
 import edu.wpi.first.wpilibj.GenericHID;
@@ -25,6 +26,7 @@ import frc.robot.commands.Lift;
 import frc.robot.commands.OpenHatch;
 import frc.robot.commands.ShooterSteer;
 import frc.robot.commands.Shooting;
+import frc.robot.subsystems.BallLifter;
 import frc.robot.subsystems.Collector;
 import frc.robot.subsystems.CollectorHatch;
 import frc.robot.subsystems.DriveTrain;
@@ -77,7 +79,7 @@ public class RobotContainer {
   
   private final Intake m_intake = new Intake(m_collector);
   
-  private final Lift m_liftBall = new Lift();
+  private final Lift m_liftBall = new Lift(m_lifter);
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -100,6 +102,7 @@ public class RobotContainer {
 
     m_intakeButton.whenHeld(m_intake);
     m_shooterButton.whenPressed(m_shoot);
+    m_liftButton.toggleWhenPressed(m_liftBall);
   }
 
   /**

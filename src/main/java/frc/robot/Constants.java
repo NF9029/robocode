@@ -103,7 +103,7 @@ public final class Constants {
 
     }
 
-    public static final class BallLifter {
+    public static final class BallLifterConstants {
         public static final int MOTOR_PORT = 6;
         public static final double MOTOR_POWER = 0.4;
         public static final double VOLTAGE = MOTOR_POWER * 12;
