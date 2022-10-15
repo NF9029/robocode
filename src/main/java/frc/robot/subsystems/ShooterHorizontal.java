@@ -26,6 +26,7 @@ public class ShooterHorizontal extends SubsystemBase {
     public void autoSteer() {
         autoSteer(0);
     }
+    
 
     public void autoSteer(double targetAngle) {
         // Debug icin
@@ -64,6 +65,10 @@ public class ShooterHorizontal extends SubsystemBase {
         else {
             m_spark.set(speed);
         }
+    }
+
+    public double getGyroAngle() {
+        return m_mpu6050.getAngleX();
     }
 
     @Override

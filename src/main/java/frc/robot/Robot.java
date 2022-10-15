@@ -4,7 +4,11 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 //import frc.robot.commands.Drive;
@@ -29,6 +33,10 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+
+    NetworkTableInstance inst = NetworkTableInstance.getDefault();
+    Shuffleboard.getTab("Gyro").add("Base Gyro", m_robotContainer.getBaseGyroData());
+    Shuffleboard.getTab("Gyro").add("Shooter Gyro", m_robotContainer.getShooterGyroData());
   }
 
   /**

@@ -160,6 +160,14 @@ public class RobotContainer {
     m_driveTrain.m_mpu6050.printAngles();
   }
 
+  public double getBaseGyroData() {
+    return m_driveTrain.m_mpu6050.getAngleX();
+  }
+
+  public double getShooterGyroData() {
+    return m_shooterRotation.getGyroAngle();
+  }
+
   public void testEncoder() {
     m_hood.printEncoderData();
   }
