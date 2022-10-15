@@ -11,7 +11,7 @@ import frc.robot.lib.mpu6050.MPU6050;
  * Did this because i want to see if i can move the shooter horizontally and vertically at the same time.
  */
 public class ShooterHorizontal extends SubsystemBase {
-    private final Spark m_spark = new Spark(MOTOR_PORT);
+    private final Spark m_motorController = new Spark(MOTOR_PORT);
     private final DigitalInput m_switch = new DigitalInput(DIGITAL_PORT);
     private int m_pendingReturn = 0;
 
@@ -21,6 +21,11 @@ public class ShooterHorizontal extends SubsystemBase {
     public ShooterHorizontal() {
         m_mpu6050.reset();
         
+    }
+
+    public void manualSteer(double speed) {
+        // saçmalık
+        m_motorController.set(speed);
     }
 
     // Default olarak 0 derece
@@ -41,29 +46,29 @@ public class ShooterHorizontal extends SubsystemBase {
     }
 
     public void returnToStart() {
-        boolean isReached = _setAngle(RETURN_SPEED, 0, m_mpu6050.getAngleX());
+        boolean isReached = _setAngle(0, m_mpu6050.getAngleX(), RETURN_SPEED);
         if (isReached) {
             m_pendingReturn = 0;
         }
     }
 
     public void returnToEnd() {
-        boolean isReached = _setAngle(RETURN_SPEED, MAX_ANGLE, m_mpu6050.getAngleX());
+        boolean isReached = _setAngle(MAX_ANGLE, m_mpu6050.getAngleX(), RETURN_SPEED);
         if (isReached) {
             m_pendingReturn = 0;
         }
     }
 
-    private boolean _setAngle(double speed, double targetAngle, double currentAngle) {
+    private boolean _setAngle(double targetAngle, double currentAngle, double speed) {
         // hedefe ulaştıysak
         if (Math.abs(targetAngle - currentAngle) <= ANGLE_TOLERANCE) {
-            System.out.println("TARGET IS REACHED");
+            System.out.println("[HORT] TARGET IS REACHED");
             return true;
         } else if (targetAngle < currentAngle) {
-            m_spark.set(speed);
+            m_motorController.set(speed);
             return false;
         } else if (targetAngle > currentAngle) {
-            m_spark.set(-speed);
+            m_motorController.set(-speed);
             return false;
         } 
 
@@ -95,25 +100,25 @@ public class ShooterHorizontal extends SubsystemBase {
                 m_pendingReturn = -1;
                 returnToStart();
             } else {
-                m_spark.set(speed/2);
+                m_motorController.set(speed/2);
             }
         }
 
         // Açı az geldiyse
         else if (MAX_ANGLE_TOLERANCE >= currentAngle) {
-            m_spark.set(speed/2);
+            m_motorController.set(speed/2);
             if (0 >= currentAngle) { 
                 // shooterı sona döndür
                 m_pendingReturn = 1;
                 returnToEnd();
             } else {
-                m_spark.set(speed/2);
+                m_motorController.set(speed/2);
             }
         }
         
         // sorun yoksa 
         else {
-            m_spark.set(speed);
+            m_motorController.set(speed);
         }
     }
 

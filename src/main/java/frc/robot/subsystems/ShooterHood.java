@@ -25,14 +25,35 @@ public class ShooterHood extends SubsystemBase {
         m_encoder.reset();
     }
 
-    public void setSpeed() {
-        // getAngle() kullanarak pid sistemi 
-    }
-
     public double getAngle() {
         return m_encoder.getDistance();
     }
     
+    public boolean setAngle(double targetAngle) {
+        double currentAngle = getAngle();
+        return setAngle(targetAngle, currentAngle);
+    }
+
+    public boolean setAngle(double targetAngle, double currentAngle) {
+        return setAngle(targetAngle, currentAngle, SPEED);
+    }
+
+    public boolean setAngle(double targetAngle, double currentAngle, double speed) {
+        // hedefe ulaştıysak
+        if (Math.abs(targetAngle - currentAngle) <= ANGLE_TOLERANCE) {
+            System.out.println("[HOOD] TARGET IS REACHED");
+            return true;
+        } else if (targetAngle < currentAngle) {
+            m_motorController.set(speed);
+            return false;
+        } else if (targetAngle > currentAngle) {
+            m_motorController.set(-speed);
+            return false;
+        } 
+        System.out.println("UNKNOWN ERROR 2");
+        return false;
+    }
+
     public void configure() {}
 
     public void printEncoderData() {

@@ -7,13 +7,13 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterHorizontal;
 
-public class ShooterSteer extends CommandBase {
+public class HorizontalManualSteer extends CommandBase {
     private final ShooterHorizontal m_subsystem;
     private final Joystick m_controller;
 
     private final SlewRateLimiter m_filter = new SlewRateLimiter(FILTER);
 
-    public ShooterSteer(ShooterHorizontal subsystem, Joystick controller) {
+    public HorizontalManualSteer(ShooterHorizontal subsystem, Joystick controller) {
         m_subsystem = subsystem;
         m_controller = controller;
 
@@ -23,7 +23,8 @@ public class ShooterSteer extends CommandBase {
     @Override
     public void execute() {
         final var speed = m_filter.calculate(m_controller.getZ()) * MAX_SPEED;
-        m_subsystem.setSpeed(speed);
+        m_subsystem.manualSteer(speed);
+        // m_subsystem.setSpeed(speed);
     }
     
     @Override
