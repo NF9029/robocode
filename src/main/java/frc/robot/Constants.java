@@ -85,7 +85,7 @@ public final class Constants {
         public static final double ANGLE_TOLERANCE = 20;
 
         public static final double FILTER = 0.5;
-        public static final double MAX_SPEED = 0.1;
+        public static final double MAX_SPEED = 0.6;
 
         public static final double DISTANCE_TO_TARGET = 5.0;
     }
