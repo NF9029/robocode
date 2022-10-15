@@ -23,6 +23,7 @@ import frc.robot.commands.Intake;
 import frc.robot.commands.Lift;
 import frc.robot.commands.OpenHatch;
 import frc.robot.commands.ShooterSteer;
+import frc.robot.commands.Shooting;
 import frc.robot.subsystems.Collector;
 import frc.robot.subsystems.CollectorHatch;
 import frc.robot.subsystems.DriveTrain;
@@ -46,6 +47,10 @@ public class RobotContainer {
   public final JoystickButton m_openHatchButton = new JoystickButton(m_robotController, 4);
   public final JoystickButton m_closeHatchButton = new JoystickButton(m_robotController, 1);
 
+  public final JoystickButton m_shooterButton = new JoystickButton(m_shooterController, 1);
+  public final JoystickButton m_liftButton = new JoystickButton(m_shooterController, 3);
+  public final JoystickButton m_intakeButton = new JoystickButton(m_shooterController, 4);
+
   // Subsystems
   private final DriveTrain m_driveTrain = new DriveTrain();
   private final ShooterHorizontal m_shooterRotation = new ShooterHorizontal();
@@ -63,13 +68,16 @@ public class RobotContainer {
   private final ShooterSteer m_manualSteer = new ShooterSteer(m_shooterRotation, m_shooterController);
   private final AutomaticSteer m_autoSteer = new AutomaticSteer(m_shooterRotation, m_shooterController, DISTANCE_TO_TARGET);
 
-  private final Lift m_liftBall = new Lift();
+  private final Shooting m_shoot = new Shooting(m_shooter);
 
   // Intake Commands
   private final OpenHatch m_openHatch = new OpenHatch(m_hatch);
   private final CloseHatch m_closeHatch = new CloseHatch(m_hatch);
-  private final Intake m_intake = new Intake();
   
+  private final Intake m_intake = new Intake(m_collector);
+  
+  private final Lift m_liftBall = new Lift();
+
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -88,6 +96,9 @@ public class RobotContainer {
     // m_robotController Buttons: A -> 1, B -> 2, X -> 3, Y -> 4
     m_openHatchButton.debounce(0.05).whenActive(m_openHatch);
     m_closeHatchButton.debounce(0.05).whenActive(m_closeHatch);
+
+    m_intakeButton.whenHeld(m_intake);
+    m_shooterButton.whenPressed(m_shoot);
   }
 
   /**

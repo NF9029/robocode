@@ -14,6 +14,18 @@ public class Collector extends SubsystemBase {
 
     }
 
+    public void setSpeed() {
+        m_motorController.setVoltage(VOLTAGE);
+    }
+
+    public void stop() {
+        m_motorController.setVoltage(0);
+    }
+
+    public double getSpeed() {
+        return m_motorController.getMotorOutputVoltage();
+    }
+
     public void configure() {}
 
 }

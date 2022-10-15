@@ -29,10 +29,10 @@ public final class Constants {
         public static final double WHEEL_RADIUS = 0.0763;
 
         // Motor Ports
-        public static final int MOTOR_PORT1 = 1;
-        public static final int MOTOR_PORT2 = 2;
-        public static final int MOTOR_PORT3 = 3;
-        public static final int MOTOR_PORT4 = 4;
+        public static final int MOTOR_PORT1 = 3;
+        public static final int MOTOR_PORT2 = 4;
+        public static final int MOTOR_PORT3 = 1;
+        public static final int MOTOR_PORT4 = 2;
 
         // Encoder Ports
         public static final int LEFT_ENCODER_PORT_A = 0;
@@ -56,7 +56,7 @@ public final class Constants {
     }
     
     public static final class ShooterConstants {
-        public static final double MOTOR_SPEED = 0.3;
+        public static final double MOTOR_SPEED = 1;
         public static final int MOTOR_PORT = 0;
     }
 
@@ -91,6 +91,8 @@ public final class Constants {
     public static final class CollectorConstants {
         public static final int MOTOR_PORT = 5;
 
+        public static final double VOLTAGE = 8.;
+
         public static final PneumaticsModuleType P_MODULE_TYPE = PneumaticsModuleType.CTREPCM;
         public static final int PORT_1 = 0;
         public static final int PORT_2 = 1;
@@ -101,12 +103,7 @@ public final class Constants {
 
     public static final class BallLifter {
         public static final int MOTOR_PORT = 6;
+        public static final double MOTOR_POWER = 0.4;
+        public static final double VOLTAGE = MOTOR_POWER * 12;
     }
-
-    public boolean isManual(Joystick controller) {
-        if (-0.1 < controller.getZ() && controller.getZ() < 0.1) {
-          return false;
-        }
-        return true;
-      }
 }

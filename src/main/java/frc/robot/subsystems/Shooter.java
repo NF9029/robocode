@@ -8,9 +8,21 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Shooter extends SubsystemBase {
     // JOYSTICK BUTTON 1
     private final Talon m_motorController = new Talon(MOTOR_PORT); 
+    private boolean m_isActive = false;
 
     public Shooter() {
         
+    }
+
+    public void toggleShoot() {
+        if (m_isActive) {
+            stop();
+            m_isActive = false;
+        }
+        else {
+            shoot();
+            m_isActive = true;
+        }
     }
 
     public void shoot() {
@@ -19,6 +31,10 @@ public class Shooter extends SubsystemBase {
 
     public void stop() {
         m_motorController.set(0);
+    }
+
+    public boolean isActive() {
+        return m_isActive;
     }
     
     public void configure() {}

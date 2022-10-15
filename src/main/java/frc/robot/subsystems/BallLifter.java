@@ -8,5 +8,20 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class BallLifter extends SubsystemBase {
     private final WPI_VictorSPX m_victor = new WPI_VictorSPX(MOTOR_PORT);
+    public BallLifter() {
+
+    }
+    public void lift() {
+        m_victor.setVoltage(VOLTAGE);
+    }
+
+    public void stop() {
+        m_victor.setVoltage(0);
+    }
+
+    public double getSpeed() {
+        return m_victor.getMotorOutputVoltage();
+    }
+
     public void configure() {}
 }
