@@ -1,6 +1,6 @@
 package frc.robot.subsystems;
 
-import static frc.robot.Constants.BallLifter.*;
+import static frc.robot.Constants.BallLifterConstants.*;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
