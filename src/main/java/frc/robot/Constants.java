@@ -23,7 +23,7 @@ public final class Constants {
 
     public static final class DriveTrainConstants {
         //Matematics (what?)
-        public static final double MAX_SPEED = 3.0;
+        public static final double MAX_SPEED = 6.0;
         public static final double MAX_ANGULAR_SPEED = Math.PI * 2;
         public static final double TRACK_WIDTH = 0.605;
         public static final double WHEEL_RADIUS = 0.0763;
@@ -53,6 +53,8 @@ public final class Constants {
         public static final boolean LEFT_MOTORS_REVERSED = false;
         public static final boolean RIGHT_MOTORS_REVERSED = true;
 
+        public static final double LIMIT = 6;
+        public static final double ROT_LIMIT = 3;
     }
     
     public static final class ShooterConstants {

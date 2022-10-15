@@ -21,8 +21,8 @@ public class Drive extends CommandBase {
   private final XboxController m_controller;
   
   // Slew rate limiters to make joystick inputs more gentle; 1/3 sec from 0 to 1.
-  private final SlewRateLimiter m_speedLimiter = new SlewRateLimiter(3);
-  private final SlewRateLimiter m_rotLimiter = new SlewRateLimiter(3);
+  private final SlewRateLimiter m_speedLimiter = new SlewRateLimiter(LIMIT);
+  private final SlewRateLimiter m_rotLimiter = new SlewRateLimiter(ROT_LIMIT);
   
   
   /**
