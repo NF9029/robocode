@@ -82,7 +82,9 @@ public final class Constants {
         // For MPU6050
         public static final byte I2C_ADDRESS = 0x69;
         public static final double MAX_ANGLE = 360;
-        public static final double ANGLE_TOLERANCE = 20;
+        public static final double MAX_ANGLE_TOLERANCE = 20;
+        public static final double RETURN_SPEED = 0.6;
+        public static final double ANGLE_TOLERANCE = 2;
 
         public static final double FILTER = 0.5;
         public static final double MAX_SPEED = 0.6;

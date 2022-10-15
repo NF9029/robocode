@@ -13,6 +13,7 @@ import frc.robot.lib.mpu6050.MPU6050;
 public class ShooterHorizontal extends SubsystemBase {
     private final Spark m_spark = new Spark(MOTOR_PORT);
     private final DigitalInput m_switch = new DigitalInput(DIGITAL_PORT);
+    private int m_pendingReturn = 0;
 
     // CHANGE
     private final MPU6050 m_mpu6050 = new MPU6050(I2C_ADDRESS);
@@ -27,11 +28,9 @@ public class ShooterHorizontal extends SubsystemBase {
         autoSteer(0);
     }
     
-
     public void autoSteer(double targetAngle) {
         // Debug icin
         // m_mpu6050.printAngles();
-        
         
         // gyro ile aramızda olan açıyla orantılı olarak motora güç ver
         double angle = m_mpu6050.getAngleX();
@@ -39,6 +38,37 @@ public class ShooterHorizontal extends SubsystemBase {
             m_mpu6050._map(angle-targetAngle, 0, 360, 0, MAX_SPEED),
             angle
         );
+    }
+
+    public void returnToStart() {
+        boolean isReached = _setAngle(RETURN_SPEED, 0, m_mpu6050.getAngleX());
+        if (isReached) {
+            m_pendingReturn = 0;
+        }
+    }
+
+    public void returnToEnd() {
+        boolean isReached = _setAngle(RETURN_SPEED, MAX_ANGLE, m_mpu6050.getAngleX());
+        if (isReached) {
+            m_pendingReturn = 0;
+        }
+    }
+
+    private boolean _setAngle(double speed, double targetAngle, double currentAngle) {
+        // hedefe ulaştıysak
+        if (Math.abs(targetAngle - currentAngle) <= ANGLE_TOLERANCE) {
+            System.out.println("TARGET IS REACHED");
+            return true;
+        } else if (targetAngle < currentAngle) {
+            m_spark.set(speed);
+            return false;
+        } else if (targetAngle > currentAngle) {
+            m_spark.set(-speed);
+            return false;
+        } 
+
+        System.out.println("UNKNOWN ERROR 1");
+        return false;
     }
 
     public void setSpeed(double speed) {
@@ -49,16 +79,36 @@ public class ShooterHorizontal extends SubsystemBase {
         // eğer fonksiyon çağırılmadan önce yakın bir zamanda açı 
         // ölçülmüşse tekrar okumakla uğraşmamak için angle parametresi var
 
-        // Açı çok geldiyse
-        if (currentAngle >= MAX_ANGLE-ANGLE_TOLERANCE) {
-            // shooterı son hızda geri döndür
+        // Başa dönme aşamasındaysak elleme
+        if (m_pendingReturn == -1) {
+            returnToStart(); 
+            return;
+        } else if (m_pendingReturn == 1) {
+            returnToEnd();
+            return;
+        }
 
+        // Açı çok geldiyse
+        if (currentAngle >= MAX_ANGLE-MAX_ANGLE_TOLERANCE) {
+            if (currentAngle >= MAX_ANGLE) {
+                // shooterı başa döndür
+                m_pendingReturn = -1;
+                returnToStart();
+            } else {
+                m_spark.set(speed/2);
+            }
         }
 
         // Açı az geldiyse
-        else if (ANGLE_TOLERANCE <= currentAngle) {
-            // shooterı son hızda geri döndür
-
+        else if (MAX_ANGLE_TOLERANCE >= currentAngle) {
+            m_spark.set(speed/2);
+            if (0 >= currentAngle) { 
+                // shooterı sona döndür
+                m_pendingReturn = 1;
+                returnToEnd();
+            } else {
+                m_spark.set(speed/2);
+            }
         }
         
         // sorun yoksa 
