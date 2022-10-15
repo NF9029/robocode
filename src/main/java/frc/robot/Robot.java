@@ -4,7 +4,10 @@
 
 package frc.robot;
 
+import static frc.robot.Constants.NetworkTableData.*;
+
 import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -21,7 +24,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-
+  private NetworkTable vision;
   private RobotContainer m_robotContainer;
 
   /**
@@ -37,6 +40,8 @@ public class Robot extends TimedRobot {
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
     Shuffleboard.getTab("Gyro").add("Base Gyro", m_robotContainer.getBaseGyroData());
     Shuffleboard.getTab("Gyro").add("Shooter Gyro", m_robotContainer.getShooterGyroData());
+
+    vision = inst.getTable("/vision");
   }
 
   /**
@@ -53,7 +58,17 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-  }
+
+    NetworkTableEntry xEntry = vision.getEntry("CenterX");
+    NetworkTableEntry yEntry = vision.getEntry("CenterY");
+    NetworkTableEntry isTargetFound = vision.getEntry("isTargetFound");
+
+    IS_TARGET_FOUND = isTargetFound.getDouble(0.0);
+    // DEFAULT NE OLUCAK
+    CENTER_X = xEntry.getDouble(0.0);
+    CENTER_Y = yEntry.getDouble(0.0);
+    System.out.println("is target found: " + IS_TARGET_FOUND + "center x: " + CENTER_X + "center y: " + CENTER_Y);
+    }
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
@@ -99,12 +114,12 @@ public class Robot extends TimedRobot {
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
-    m_robotContainer.initTest();
   }
 
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
     m_robotContainer.testSensors();    
+    m_robotContainer.initTest();
   }
 }

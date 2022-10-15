@@ -4,32 +4,34 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.ShooterHood;
 import frc.robot.subsystems.ShooterHorizontal;
 
+import static frc.robot.Constants.AutonomusConstants.*;
 
 public class Auto extends CommandBase {
     private final DriveTrain m_driveBase;
 
-    private final Shooting m_shoot;
-    private final HoodManualSteer m_hood;
-    private final HorizontalAutoSteer m_steer;
+    private final HorizontalAutoSteer m_horizontalSteerCommand;
+    private final HoodAutoSteer m_hoodSteerCommand;
+    private final Shooting m_shootCommand;
 
     private final Timer m_timer = new Timer();
 
-    public Auto(DriveTrain drivetrain, Shooter shooter, ShooterHood hood, ShooterHorizontal steer, Joystick controller, double distanceToTarget) {
+    public Auto(DriveTrain drivetrain, Shooter shooter, ShooterHood shooterHood, ShooterHorizontal shooterHorizontal, Joystick controller) {
         m_driveBase = drivetrain;
-        m_shoot = new Shooting(shooter);
-        m_hood = new HoodManualSteer(hood);
-        m_steer = new HorizontalAutoSteer(steer, controller, distanceToTarget);
+        m_shootCommand = new Shooting(shooter);
+        m_hoodSteerCommand = new HoodAutoSteer(shooterHood);
+        m_horizontalSteerCommand = new HorizontalAutoSteer(shooterHorizontal);
     }
 
     public void shoot() {
-        m_hood.schedule();
-        m_steer.schedule();
-        m_shoot.schedule();
+        m_horizontalSteerCommand.schedule();
+        m_hoodSteerCommand.schedule();
+        m_shootCommand.schedule();
     }
 
     @Override
@@ -39,9 +41,9 @@ public class Auto extends CommandBase {
 
     @Override
     public void execute() {
-        m_driveBase.drive(-6, 0);
-        if (m_timer.get() == 5) {
-            
+        if (m_timer.get() <= 5) {
+            m_driveBase.drive(SPEED, ROTATION);
         }
+        shoot();
     }
 }

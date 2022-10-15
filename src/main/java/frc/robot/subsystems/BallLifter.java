@@ -7,7 +7,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class BallLifter extends SubsystemBase {
-    private final WPI_VictorSPX m_victor = new WPI_VictorSPX(MOTOR_PORT);
+    public final WPI_VictorSPX m_victor = new WPI_VictorSPX(MOTOR_PORT);
     public BallLifter() {
 
     }
@@ -21,6 +21,10 @@ public class BallLifter extends SubsystemBase {
 
     public double getSpeed() {
         return m_victor.getMotorOutputVoltage();
+    }
+
+    public void test(double test) {
+        m_victor.setVoltage(test);
     }
 
     public void configure() {}

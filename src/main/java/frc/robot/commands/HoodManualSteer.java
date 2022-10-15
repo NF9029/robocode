@@ -30,4 +30,9 @@ public class HoodManualSteer extends CommandBase {
     public boolean isFinished() {
         return true;
     }
+
+    public void test() {
+        final var speed = m_filter.calculate(m_controller.getZ() * TEST_SPEED);
+        m_subsystem.manualSteer(speed);
+    }
 }

@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 
 public class Collector extends SubsystemBase {
-    private final WPI_VictorSPX m_motorController = new WPI_VictorSPX(MOTOR_PORT);
+    public final WPI_VictorSPX m_motorController = new WPI_VictorSPX(MOTOR_PORT);
 
     public Collector() {
 
@@ -24,6 +24,10 @@ public class Collector extends SubsystemBase {
 
     public double getSpeed() {
         return m_motorController.getMotorOutputVoltage();
+    }
+
+    public void test() {
+        m_motorController.setVoltage(TEST_VOLT);
     }
 
     public void configure() {}

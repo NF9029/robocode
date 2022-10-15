@@ -4,8 +4,8 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PneumaticsControlModule;
+//import edu.wpi.first.wpilibj.Joystick;
+//import edu.wpi.first.wpilibj.PneumaticsControlModule;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
 /**
@@ -20,11 +20,27 @@ public final class Constants {
 
     public static final int ROBOT_CONTROLLER_PORT = 0;
     public static final int SHOOTER_CONTROLLER_PORT = 1;
+    
+
+    public static final class NetworkTableData {
+        public static double CENTER_X;
+        public static double CENTER_Y;
+        public static double IS_TARGET_FOUND;
+    }
+
+    public static class AutonomusConstants {
+        public static final double SPEED = 0;
+        public static final double ROTATION = 0;
+    }
 
     public static final class DriveTrainConstants {
         //Matematics (what?)
         public static final double MAX_SPEED = 6.0;
         public static final double MAX_ANGULAR_SPEED = Math.PI * 2;
+
+        public static final double TEST_SPEED = 0.1;
+        public static final double TEST_ANGULAR = 0.1;
+
         public static final double TRACK_WIDTH = 0.605;
         public static final double WHEEL_RADIUS = 0.0763;
 
@@ -59,6 +75,7 @@ public final class Constants {
     
     public static final class ShooterConstants {
         public static final double MOTOR_SPEED = 1;
+        public static final double TEST_SPEED = 0.1;
         public static final int MOTOR_PORT = 0;
     }
 
@@ -75,6 +92,8 @@ public final class Constants {
         public static final double DISTANCE_PER_PULSE = 360./400.;
 
         public static final double MAX_SPEED = 0.1;
+        public static final double TEST_SPEED = 0.1;
+
         public static final double FILTER = 0.5;
 
         public static final double MAX_ANGLE = 30;
@@ -89,11 +108,13 @@ public final class Constants {
         public static final byte I2C_ADDRESS = 0x69;
         public static final double MAX_ANGLE = 360;
         public static final double MAX_ANGLE_TOLERANCE = 20;
-        public static final double RETURN_SPEED = 0.6;
+        public static final double RETURN_SPEED = 0.8;
         public static final double ANGLE_TOLERANCE = 2;
 
         public static final double FILTER = 0.5;
-        public static final double MAX_SPEED = 0.6;
+        public static final double MAX_SPEED = 1;
+        public static final double TEST_SPEED = 0.1;
+        public static final double TEST_DESTINATION = 45;
 
         public static final double DISTANCE_TO_TARGET = 5.0;
     }
@@ -102,6 +123,7 @@ public final class Constants {
         public static final int MOTOR_PORT = 5;
 
         public static final double VOLTAGE = 8.;
+        public static final double TEST_VOLT = 2.;
 
         public static final PneumaticsModuleType P_MODULE_TYPE = PneumaticsModuleType.CTREPCM;
         public static final int PORT_1 = 0;
@@ -115,5 +137,6 @@ public final class Constants {
         public static final int MOTOR_PORT = 6;
         public static final double MOTOR_POWER = 0.4;
         public static final double VOLTAGE = MOTOR_POWER * 12;
+        public static final double TEST_VOLT = 2.;
     }
 }

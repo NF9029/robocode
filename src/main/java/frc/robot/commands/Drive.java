@@ -68,4 +68,9 @@ public class Drive extends CommandBase {
   public boolean isFinished() {
     return false;
   }
+
+  public void test() {
+    m_driveTrain.drive(TEST_SPEED, TEST_ANGULAR);
+  }
+
 }

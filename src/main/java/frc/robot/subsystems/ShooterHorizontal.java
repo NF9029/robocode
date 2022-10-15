@@ -11,7 +11,7 @@ import frc.robot.lib.mpu6050.MPU6050;
  * Did this because i want to see if i can move the shooter horizontally and vertically at the same time.
  */
 public class ShooterHorizontal extends SubsystemBase {
-    private final Spark m_motorController = new Spark(MOTOR_PORT);
+    public final Spark m_motorController = new Spark(MOTOR_PORT);
     private final DigitalInput m_switch = new DigitalInput(DIGITAL_PORT);
     private int m_pendingReturn = 0;
 
@@ -45,6 +45,15 @@ public class ShooterHorizontal extends SubsystemBase {
         );
     }
 
+    public void testSteer() {
+        testSteer(TEST_DESTINATION);
+    }
+
+    public void testSteer(double targetAngle) {
+        double angle = m_mpu6050.getAngleX();
+        setSpeed(m_mpu6050._map(angle - targetAngle , 0, 360, 0, TEST_SPEED));
+    }
+
     public void returnToStart() {
         boolean isReached = _setAngle(0, m_mpu6050.getAngleX(), RETURN_SPEED);
         if (isReached) {
@@ -65,10 +74,10 @@ public class ShooterHorizontal extends SubsystemBase {
             System.out.println("[HORT] TARGET IS REACHED");
             return true;
         } else if (targetAngle < currentAngle) {
-            m_motorController.set(speed);
+            m_motorController.set(-speed);
             return false;
         } else if (targetAngle > currentAngle) {
-            m_motorController.set(-speed);
+            m_motorController.set(speed);
             return false;
         } 
 

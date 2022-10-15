@@ -29,4 +29,8 @@ public class Shooting extends CommandBase {
         m_isFinished = false;
         return true;
     }
+
+    public void test() {
+        m_shooter.test();
+    } 
 }

@@ -22,4 +22,8 @@ public class Lift extends CommandBase {
     public void end(boolean interrupted) {
         m_lifter.stop();
     }
+
+    public void test() {
+        m_lifter.test(TEST_VOLT);
+    }
 }

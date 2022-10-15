@@ -22,4 +22,8 @@ public class Intake extends CommandBase {
     public void end(boolean interrupted) {
         m_collector.stop();
     }
+
+    public void test() {
+        m_collector.test();
+    }
 }

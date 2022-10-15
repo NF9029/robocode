@@ -37,8 +37,8 @@ public class DriveTrain extends SubsystemBase {
   private final WPI_VictorSPX m_rightMaster = new WPI_VictorSPX(MOTOR_PORT3);
   private final WPI_VictorSPX m_rightFollower = new WPI_VictorSPX(MOTOR_PORT4);
   
-  private final MotorControllerGroup m_leftMotors;
-  private final MotorControllerGroup m_rightMotors;
+  public final MotorControllerGroup m_leftMotors;
+  public final MotorControllerGroup m_rightMotors;
   
   //private final DifferentialDrive m_drive;
   

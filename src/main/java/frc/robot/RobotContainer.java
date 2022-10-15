@@ -167,14 +167,30 @@ public class RobotContainer {
   // TEST MODE
   public void initTest() {
     m_hood.initTest();
+    //m_driveTrain.resetEncoders();
 
-    m_driveTrain.resetEncoders();
+    m_shooter.m_motorController.set(0.5);
+    m_hood.m_motorController.set(0.2); // positive is up (ters bağla)
+    m_shooterRotation.m_motorController.setVoltage(12); // POSITIVE VOLT GOES RIGHT
+    m_lifter.m_victor.setVoltage(4);
+    m_collector.m_motorController.setVoltage(12);
+    m_driveTrain.m_leftMotors.setVoltage(4);
+    m_driveTrain.m_rightMotors.setVoltage(4);
+
+
+    //m_driveCommand.test();
+    //m_hoodManualSteer.test();
+    //m_horizontalManualSteer.test();
+    //m_horizontalAutoSteer.test();
+    //m_intake.test();
+    //m_liftBall.test();
+    //m_shoot.test();
   }
 
   public void testSensors() {
     System.out.print("Encoder data: ");
     m_driveTrain.printEncoderData();
-    new WaitCommand(2);
+    //new WaitCommand(2);
 
 
     // System.out.print("MPU6050 data: ");

@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Shooter extends SubsystemBase {
     // JOYSTICK BUTTON 1
-    private final Talon m_motorController = new Talon(MOTOR_PORT); 
+    public final Talon m_motorController = new Talon(MOTOR_PORT); 
     private boolean m_isActive = false;
 
     public Shooter() {
@@ -35,6 +35,10 @@ public class Shooter extends SubsystemBase {
 
     public boolean isActive() {
         return m_isActive;
+    }
+
+    public void test() {
+        m_motorController.set(TEST_SPEED);
     }
     
     public void configure() {}

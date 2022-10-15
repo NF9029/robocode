@@ -22,4 +22,8 @@ public class HorizontalAutoSteer extends CommandBase {
     public boolean isFinished() {
         return true;
     }
+
+    public void test() {
+        m_subsystem.testSteer();
+    }
 }
