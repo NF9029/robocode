@@ -27,14 +27,16 @@ public class ShooterHorizontal extends SubsystemBase {
         autoFollow(0);
     }
 
-    public void autoFollow(double target_angle) {
+    public void autoFollow(double targetAngle) {
         // Debug icin
         // m_mpu6050.printAngles();
         
         
         // gyro ile aramızda olan açıyla orantılı olarak motora güç ver
-        m_spark.set(
-            m_mpu6050._map(m_mpu6050.getAngleX(), 0, 360, 0, 1)
+        double angle = m_mpu6050.getAngleX();
+        setSpeed(
+            m_mpu6050._map(angle-targetAngle, 0, 360, 0, MAX_SPEED),
+            angle
         );
     }
 
@@ -53,11 +55,18 @@ public class ShooterHorizontal extends SubsystemBase {
         // Açı çok geldiyse
         if (currentAngle >= MAX_ANGLE-ANGLE_TOLERANCE) {
             // shooterı son hızda geri döndür
+
         }
 
         // Açı az geldiyse
-        if (ANGLE_TOLERANCE <= currentAngle) {
+        else if (ANGLE_TOLERANCE <= currentAngle) {
             // shooterı son hızda geri döndür
+
+        }
+        
+        // sorun yoksa 
+        else {
+            m_spark.set(speed);
         }
     }
 
