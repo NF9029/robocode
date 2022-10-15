@@ -16,6 +16,8 @@ public class ShooterHood extends SubsystemBase {
     private final Encoder m_encoder = new Encoder(ENCODER_PORT_A, ENCODER_PORT_B, false, Encoder.EncodingType.k1X); 
 
     public ShooterHood() {
+        // başlangıçta açıyı sıfırla
+        m_encoder.reset();
         m_encoder.setDistancePerPulse(DISTANCE_PER_PULSE);
     }
 
@@ -24,7 +26,11 @@ public class ShooterHood extends SubsystemBase {
     }
 
     public void setSpeed() {
+        // getAngle() kullanarak pid sistemi 
+    }
 
+    public double getAngle() {
+        return m_encoder.getDistance();
     }
     
     public void configure() {}

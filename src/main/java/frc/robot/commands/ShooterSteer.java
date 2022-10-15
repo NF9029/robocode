@@ -21,15 +21,9 @@ public class ShooterSteer extends CommandBase {
     }
 
     @Override
-    public void initialize() {
-        System.out.println("manual init");
-    }
-
-    @Override
     public void execute() {
         final var speed = m_filter.calculate(m_controller.getZ()) * MAX_SPEED;
-
-        m_subsystem.steer(speed);
+        m_subsystem.setSpeed(speed);
     }
     
     @Override

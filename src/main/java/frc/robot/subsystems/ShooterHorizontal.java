@@ -23,11 +23,11 @@ public class ShooterHorizontal extends SubsystemBase {
     }
 
     // Default olarak 0 derece
-    public void autoFollow() {
-        autoFollow(0);
+    public void autoSteer() {
+        autoSteer(0);
     }
 
-    public void autoFollow(double targetAngle) {
+    public void autoSteer(double targetAngle) {
         // Debug icin
         // m_mpu6050.printAngles();
         
@@ -38,10 +38,6 @@ public class ShooterHorizontal extends SubsystemBase {
             m_mpu6050._map(angle-targetAngle, 0, 360, 0, MAX_SPEED),
             angle
         );
-    }
-
-    public void steer(double speed) {
-        
     }
 
     public void setSpeed(double speed) {
