@@ -51,8 +51,8 @@ public class RobotContainer {
   public final JoystickButton m_closeHatchButton = new JoystickButton(m_robotController, 1);
 
   public final JoystickButton m_shooterButton = new JoystickButton(m_shooterController, 1);
-  public final JoystickButton m_liftButton = new JoystickButton(m_shooterController, 3);
-  public final JoystickButton m_intakeButton = new JoystickButton(m_shooterController, 4);
+  public final JoystickButton m_intakeButton = new JoystickButton(m_shooterController, 3);
+  public final JoystickButton m_liftButton = new JoystickButton(m_shooterController, 4);
 
   // Subsystems
   private final DriveTrain m_driveTrain = new DriveTrain();
@@ -101,8 +101,9 @@ public class RobotContainer {
     m_closeHatchButton.debounce(0.05).whenActive(m_closeHatch);
 
     m_intakeButton.whenHeld(m_intake);
+    m_liftButton.whenHeld(m_liftBall);
+    
     m_shooterButton.whenPressed(m_shoot);
-    m_liftButton.toggleWhenPressed(m_liftBall);
   }
 
   /**
