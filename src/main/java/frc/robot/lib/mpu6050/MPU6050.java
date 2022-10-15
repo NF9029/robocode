@@ -67,7 +67,7 @@ public class MPU6050 {
     m_configured_state = getMPUData();
   }
 
-  private double ard_map(long x, long in_min, long in_max, long out_min, long out_max) {
+  public double _map(double x, double in_min, double in_max, double out_min, double out_max) {
     return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
   }
 
@@ -87,9 +87,9 @@ public class MPU6050 {
 
   public double[] getAllAngles() {
     MPUData data = getMPUData();
-    double ax = ard_map(data.m_accX, 265, 402, -90, 90);
-    double ay = ard_map(data.m_accY, 265, 402, -90, 90);
-    double az = ard_map(data.m_accZ, 265, 402, -90, 90);
+    double ax = _map(data.m_accX, 265, 402, -90, 90);
+    double ay = _map(data.m_accY, 265, 402, -90, 90);
+    double az = _map(data.m_accZ, 265, 402, -90, 90);
 
     ax = Math.atan2(-ay, -az) + Math.PI;
     ay = Math.atan2(-ax, -az) + Math.PI;
@@ -100,24 +100,24 @@ public class MPU6050 {
 
   public double getAngleX() {
     MPUData data = getMPUData();
-    double ay = ard_map(data.m_accY, 265, 402, -90, 90);
-    double az = ard_map(data.m_accZ, 265, 402, -90, 90);
+    double ay = _map(data.m_accY, 265, 402, -90, 90);
+    double az = _map(data.m_accZ, 265, 402, -90, 90);
 
     return Math.atan2(-ay, -az) + Math.PI;
   }
 
   public double getAngleY() {
     MPUData data = getMPUData();
-    double ax = ard_map(data.m_accX, 265, 402, -90, 90);
-    double az = ard_map(data.m_accZ, 265, 402, -90, 90);
+    double ax = _map(data.m_accX, 265, 402, -90, 90);
+    double az = _map(data.m_accZ, 265, 402, -90, 90);
 
     return Math.atan2(-ax, -az) + Math.PI;
   }
 
   public double getAngleZ() {
     MPUData data = getMPUData();
-    double ax = ard_map(data.m_accX, 265, 402, -90, 90);
-    double ay = ard_map(data.m_accY, 265, 402, -90, 90);
+    double ax = _map(data.m_accX, 265, 402, -90, 90);
+    double ay = _map(data.m_accY, 265, 402, -90, 90);
 
     return Math.atan2(-ay, -ax) + Math.PI;
   }
@@ -127,8 +127,8 @@ public class MPU6050 {
    */
   public Rotation2d getRotationX() {
     MPUData data = getMPUData();
-    double ay = ard_map(data.m_accY, 265, 402, -90, 90);
-    double az = ard_map(data.m_accZ, 265, 402, -90, 90);
+    double ay = _map(data.m_accY, 265, 402, -90, 90);
+    double az = _map(data.m_accZ, 265, 402, -90, 90);
 
     return new Rotation2d(Math.atan2(-ay, -az) + Math.PI);
   }
@@ -138,8 +138,8 @@ public class MPU6050 {
    */
   public Rotation2d getRotationY() {
     MPUData data = getMPUData();
-    double ax = ard_map(data.m_accX, 265, 402, -90, 90);
-    double az = ard_map(data.m_accZ, 265, 402, -90, 90);
+    double ax = _map(data.m_accX, 265, 402, -90, 90);
+    double az = _map(data.m_accZ, 265, 402, -90, 90);
 
     return new Rotation2d(Math.atan2(-ax, -az) + Math.PI);
   }
@@ -149,8 +149,8 @@ public class MPU6050 {
    */
   public Rotation2d getRotationZ() {
     MPUData data = getMPUData();
-    double ax = ard_map(data.m_accX, 265, 402, -90, 90);
-    double ay = ard_map(data.m_accY, 265, 402, -90, 90);
+    double ax = _map(data.m_accX, 265, 402, -90, 90);
+    double ay = _map(data.m_accY, 265, 402, -90, 90);
 
     return new Rotation2d(Math.atan2(-ay, -ax) + Math.PI);
   }

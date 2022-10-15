@@ -22,13 +22,43 @@ public class ShooterHorizontal extends SubsystemBase {
         
     }
 
-    
-    public void steer(double speed) {
-
+    // Default olarak 0 derece
+    public void autoFollow() {
+        autoFollow(0);
     }
 
-    public void setSpeed() {
+    public void autoFollow(double target_angle) {
+        // Debug icin
+        // m_mpu6050.printAngles();
+        
+        
+        // gyro ile aramızda olan açıyla orantılı olarak motora güç ver
+        m_spark.set(
+            m_mpu6050._map(m_mpu6050.getAngleX(), 0, 360, 0, 1)
+        );
+    }
 
+    public void steer(double speed) {
+        
+    }
+
+    public void setSpeed(double speed) {
+        setSpeed(speed, m_mpu6050.getAngleX());
+    }
+
+    public void setSpeed(double speed, double currentAngle) {
+        // eğer fonksiyon çağırılmadan önce yakın bir zamanda açı 
+        // ölçülmüşse tekrar okumakla uğraşmamak için angle parametresi var
+
+        // Açı çok geldiyse
+        if (currentAngle >= MAX_ANGLE-ANGLE_TOLERANCE) {
+            // shooterı son hızda geri döndür
+        }
+
+        // Açı az geldiyse
+        if (ANGLE_TOLERANCE <= currentAngle) {
+            // shooterı son hızda geri döndür
+        }
     }
 
     @Override
@@ -41,5 +71,7 @@ public class ShooterHorizontal extends SubsystemBase {
 
     }
 
-    public void configure() {}
+    public void configure() {
+
+    }
 }
