@@ -7,6 +7,7 @@ package frc.robot;
 import static frc.robot.Constants.ROBOT_CONTROLLER_PORT;
 import static frc.robot.Constants.SHOOTER_CONTROLLER_PORT;
 import static frc.robot.Constants.HorizontalConstants.DISTANCE_TO_TARGET;
+import static frc.robot.Constants.NetworkTableData.*;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -28,6 +29,7 @@ import frc.robot.commands.HorizontalAutoSteer;
 import frc.robot.commands.HoodManualSteer;
 import frc.robot.commands.HoodAutoSteer;
 import frc.robot.commands.Shooting;
+import frc.robot.commands.Yank;
 import frc.robot.subsystems.BallLifter;
 import frc.robot.subsystems.Collector;
 import frc.robot.subsystems.CollectorHatch;
@@ -51,6 +53,7 @@ public class RobotContainer {
   //public final JoystickButton m_1 = new JoystickButton(m_shooterController, 1);
   public final JoystickButton m_openHatchButton = new JoystickButton(m_robotController, 4);
   public final JoystickButton m_closeHatchButton = new JoystickButton(m_robotController, 1);
+  public final JoystickButton m_yankButton = new JoystickButton(m_robotController, 3);
 
   public final JoystickButton m_shooterButton = new JoystickButton(m_shooterController, 1);
   public final JoystickButton m_intakeButton = new JoystickButton(m_shooterController, 3);
@@ -68,6 +71,7 @@ public class RobotContainer {
   
   // Drivetrain Commands
   private final Drive m_driveCommand = new Drive(m_driveTrain, m_robotController);
+  private final Yank m_yank = new Yank(m_driveTrain, CENTER_X);
   
   // Shooter Commands
   private final HorizontalManualSteer m_horizontalManualSteer = new HorizontalManualSteer(m_shooterRotation, m_shooterController);
@@ -109,6 +113,8 @@ public class RobotContainer {
     m_liftButton.whenHeld(m_liftBall);
     
     m_shooterButton.whenPressed(m_shoot);
+
+    m_yankButton.whenHeld(m_yank);
   }
 
   /**

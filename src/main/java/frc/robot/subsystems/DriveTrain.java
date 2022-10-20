@@ -109,6 +109,14 @@ public class DriveTrain extends SubsystemBase {
     setSpeeds(wheelSpeeds);
   }
 
+  public void fix(double c_center) {
+    double step = c_center - 160;
+    double error = step / 160;
+    System.out.println(error);
+    m_leftMotors.set(error);
+    m_rightMotors.set(-error);
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
