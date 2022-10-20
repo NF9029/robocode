@@ -1,4 +1,4 @@
-package frc.robot.lib.mpu6050;
+package frc.team9029.wpilibj9029;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.I2C;

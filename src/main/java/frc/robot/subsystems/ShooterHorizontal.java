@@ -5,7 +5,7 @@ import static frc.robot.Constants.HorizontalConstants.*;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.lib.mpu6050.MPU6050;
+import frc.team9029.wpilibj9029.MPU6050;
 
 /**
  * Did this because i want to see if i can move the shooter horizontally and vertically at the same time.

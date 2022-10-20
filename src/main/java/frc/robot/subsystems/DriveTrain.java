@@ -4,7 +4,7 @@
 
 package frc.robot.subsystems;
 
-import frc.robot.lib.mpu6050.MPU6050;
+import frc.team9029.wpilibj9029.MPU6050;
 
 import static frc.robot.Constants.DriveTrainConstants.*;
 
